@@ -2,12 +2,56 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hw1-data-grid</title>
+    <meta name="description" content="Team directory data grid with sorting, filtering, pagination and keyboard navigation." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/css/reset.css" />
+    <link rel="stylesheet" href="/src/css/tokens.css" />
+    <link rel="stylesheet" href="/src/css/layout.css" />
+    <link rel="stylesheet" href="/src/css/table.css" />
+    <title>Team Directory Grid</title>
   </head>
   <body>
-    <div id="app"></div>
+    <a href="#main-content">Skip to main content</a>
+
+    <header>
+      <h1>Team Directory</h1>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <form id="grid-controls" role="search">
+        <label for="filter-input">Filter rows</label>
+        <input type="search" id="filter-input" name="filter" aria-describedby="filter-hint" />
+        <p id="filter-hint">Matches any column. Letter case is ignored.</p>
+      </form>
+
+      <section data-page-size="5" aria-label="Team members" tabindex="0">
+        <table role="grid">
+          <caption>Team members</caption>
+          <thead>
+            <tr role="row">
+              <th scope="col"><button type="button">Name</button></th>
+              <th scope="col"><button type="button">Role</button></th>
+              <th scope="col"><button type="button">City</button></th>
+              <th scope="col"><button type="button">Score</button></th>
+            </tr>
+          </thead>
+          <tbody id="grid-body"></tbody>
+        </table>
+      </section>
+
+      <nav aria-label="Pagination">
+        <button type="button" id="prev-page">Previous page</button>
+        <button type="button" id="next-page">Next page</button>
+      </nav>
+
+      <p id="grid-status" role="status"></p>
+    </main>
+
+    <footer>
+      <p>Team Directory Grid, built with Vite and vanilla TypeScript.</p>
+    </footer>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
