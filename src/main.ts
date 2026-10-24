@@ -11,6 +11,7 @@ import {
 } from './grid-controls.ts';
 import { buildView } from './grid-model.ts';
 import { renderRows } from './grid-render.ts';
+import { createGridKeyboard } from './keyboard.ts';
 import { members } from './sample-data.ts';
 
 function queryRequired<E extends Element>(selector: string): E {
@@ -44,6 +45,23 @@ const state: GridState = {
   selectedIds: new Set<string>(),
 };
 
+const keyboard = createGridKeyboard(tbody, {
+  onRowSelect: (rowId) => {
+    const member = members.find((item) => item.id === rowId);
+    if (member !== undefined) {
+      status.textContent = `Selected ${member.name}.`;
+    }
+  },
+  onToggleRow: (rowId) => {
+    if (state.selectedIds.has(rowId)) {
+      state.selectedIds.delete(rowId);
+    } else {
+      state.selectedIds.add(rowId);
+    }
+    return state.selectedIds.has(rowId);
+  },
+});
+
 const render = (): void => {
   const sortedIndex = columns.findIndex((column) => column.accessorKey === state.sortKey);
   const sortKey = sortedIndex === -1 ? null : columns[sortedIndex].accessorKey;
@@ -64,6 +82,7 @@ const render = (): void => {
     page: view.page,
     pageCount: view.pageCount,
   });
+  keyboard.restore(view.pageRows.map((row) => row.id));
 };
 
 bindSortHeaders(thead, columns, (accessorKey) => {
