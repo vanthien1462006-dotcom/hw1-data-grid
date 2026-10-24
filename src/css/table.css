@@ -1,1 +1,73 @@
-/* stub: filled in H1-T06 */
+/* Table: scrolls inside its own section, never the whole page */
+main > section {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+table {
+  width: 100%;
+  min-width: 30rem;
+  border-collapse: collapse;
+}
+
+caption {
+  padding: var(--space-2) var(--space-3);
+  font-weight: 600;
+  text-align: left;
+}
+
+th,
+td {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background-color: var(--surface);
+}
+
+th > button,
+nav button {
+  min-width: var(--target-min);
+  min-height: var(--target-min);
+  padding: var(--space-1) var(--space-2);
+  font-weight: 600;
+  color: var(--text);
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+/* Focus ring inside a cell is drawn inside the cell, so the scroll region does not clip it */
+td:focus-visible,
+th:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+tbody tr[aria-selected="true"] {
+  background-color: var(--selected-bg);
+}
+
+/* Pagination */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+nav button:not(:disabled) {
+  color: var(--accent-text);
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+nav button:disabled {
+  color: var(--text-muted);
+  background-color: var(--surface);
+  cursor: not-allowed;
+}
