@@ -1,8 +1,25 @@
 import type { ColumnDef, GridState, Member } from './contract.ts';
-import { applySortState, bindSortHeaders, nextSortDir } from './grid-controls.ts';
+import {
+  applyPaginationState,
+  applySortState,
+  bindFilterForm,
+  bindPagination,
+  bindSortHeaders,
+  nextSortDir,
+  readPageSize,
+  renderStatus,
+} from './grid-controls.ts';
 import { buildView } from './grid-model.ts';
 import { renderRows } from './grid-render.ts';
 import { members } from './sample-data.ts';
+
+function queryRequired<E extends Element>(selector: string): E {
+  const element = document.querySelector<E>(selector);
+  if (element === null) {
+    throw new Error(`Missing ${selector} in index.html.`);
+  }
+  return element;
+}
 
 const columns: ColumnDef<Member>[] = [
   { header: 'Name', accessorKey: 'name', sortable: true },
@@ -11,23 +28,19 @@ const columns: ColumnDef<Member>[] = [
   { header: 'Score', accessorKey: 'score', sortable: true },
 ];
 
-const tbody = document.querySelector<HTMLTableSectionElement>('#grid-body');
-if (tbody === null) {
-  throw new Error('Missing #grid-body in index.html: the table body is required to render rows.');
-}
+const section = queryRequired<HTMLElement>('section[data-page-size]');
+const form = queryRequired<HTMLFormElement>('#grid-controls');
+const tbody = queryRequired<HTMLTableSectionElement>('#grid-body');
+const thead = queryRequired<HTMLTableSectionElement>('thead');
+const nav = queryRequired<HTMLElement>('nav[aria-label="Pagination"]');
+const status = queryRequired<HTMLElement>('#grid-status');
 
-const thead = document.querySelector<HTMLTableSectionElement>('thead');
-if (thead === null) {
-  throw new Error('Missing thead in index.html: the sort headers are required.');
-}
-
-// Paging arrives with H1-T10. Until then, all rows share one page.
 const state: GridState = {
   sortKey: null,
   sortDir: 'none',
   filterText: '',
   page: 1,
-  pageSize: members.length,
+  pageSize: readPageSize(section),
   selectedIds: new Set<string>(),
 };
 
@@ -44,6 +57,13 @@ const render = (): void => {
   state.page = view.page;
   renderRows(tbody, view.pageRows, columns, state.selectedIds);
   applySortState(thead, sortedIndex, state.sortDir);
+  applyPaginationState(nav, view.page, view.pageCount);
+  renderStatus(status, {
+    matchCount: view.matchCount,
+    total: members.length,
+    page: view.page,
+    pageCount: view.pageCount,
+  });
 };
 
 bindSortHeaders(thead, columns, (accessorKey) => {
@@ -52,6 +72,17 @@ bindSortHeaders(thead, columns, (accessorKey) => {
   state.sortKey = next === 'none' ? null : accessorKey;
   state.sortDir = next;
   state.page = 1;
+  render();
+});
+
+bindFilterForm(form, (text) => {
+  state.filterText = text;
+  state.page = 1;
+  render();
+});
+
+bindPagination(nav, (step) => {
+  state.page += step;
   render();
 });
 
