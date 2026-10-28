@@ -1,0 +1,2414 @@
+
+> /clear
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T02). Chỉ làm
+  H1-T02. Không viết logic.
+
+  Repo được tạo bởi Vite template vanilla-ts, có mã demo. Các việc cần làm:
+  1. Xóa mã demo khỏi ổ đĩa bằng Remove-Item. Không dùng git rm vì các file này
+  chưa từng được commit: src/counter.ts, src/style.css, public/icons.svg, và
+  toàn bộ thư mục src/assets/.
+  2. Tạo các file stub. Mỗi file chỉ có hai dòng: "export {};" và một comment
+  "// stub: filled in <task>". Các file: src/main.ts (H1-T08), src/contract.ts
+  (H1-T03), src/grid-model.ts (H1-T07), src/sample-data.ts và
+  src/grid-render.ts (H1-T08), src/grid-controls.ts (H1-T09), src/keyboard.ts
+  (H1-T11).
+  3. Tạo src/css/reset.css, src/css/tokens.css, src/css/layout.css,
+  src/css/table.css, mỗi file chỉ có "/* stub: filled in <task> */" (H1-T05 cho
+  reset và tokens, H1-T06 cho layout và table).
+  4. package.json: trong "scripts", thêm "test": "node --test
+  \"src/**/*.test.ts\"". Không thêm dependency. Giữ nguyên "dev", "build",
+  "preview".
+  5. tsconfig.json: thêm "exclude": ["src/**/*.test.ts"] ngay sau dòng
+  "include". Giữ nguyên mọi dòng khác (test chạy bằng Node, không cần kiểu của
+  node:test).
+  6. Không sửa index.html ở task này. Không chạy npm test ở task này (chưa có
+  test).
+
+  Kiểm tra: npm run build phải thành công. Select-String -Path package.json
+  -Pattern '"vite"|"typescript"' phải cho đúng hai dòng devDependencies.
+
+  Commit (đường dẫn tường minh):
+  git add .gitignore index.html public/favicon.svg
+  git add src/main.ts src/contract.ts src/grid-model.ts src/sample-data.ts
+  src/grid-render.ts src/grid-controls.ts src/keyboard.ts src/css/reset.css
+  src/css/tokens.css src/css/layout.css src/css/table.css package.json
+  package-lock.json tsconfig.json
+  git commit -m "chore(scaffold): replace Vite demo with stub modules"
+
+  Không push. Báo cáo bằng tiếng Việt.
+
+● Trước khi sửa gì, tôi đọc ba file quy định và xem trạng thái hiện tại của
+  repo.
+
+  Read 3 files, ran 1 shell command (ctrl+o to expand)
+
+● Repo đang ở trạng thái đúng như mô tả: chỉ có một commit c0d87cf, các file
+  template chưa được track. Trước khi xóa và ghi đè, tôi xem nội dung các file
+  liên quan để chắc chắn đây đúng là mã demo.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Toàn bộ mã cần xóa là template demo (counter.ts, style.css, assets/, icons.svg
+  và nội dung main.ts). Không có file nào được track nên không có lịch sử git
+  để khôi phục; nội dung trên đã được xem và xác nhận là demo. Tôi xóa các file
+  này theo đúng yêu cầu.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Đã xóa xong. Tiếp theo tôi đọc src/main.ts bằng Read để có thể ghi đè, rồi tạo
+  các stub.
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(src\main.ts)
+  ⎿  Added 2 lines, removed 60 lines
+       1 -import './style.css'                                           
+       2 -import heroImg from './assets/hero.png'                        
+       3 -import typescriptLogo from './assets/typescript.svg'           
+       4 -import viteLogo from './assets/vite.svg'                       
+       5 -import { setupCounter } from './counter.ts'                    
+       6 -                                                               
+       7 -document.querySelector<HTMLDivElement>('#app')!.innerHTML = `  
+       8 -<section id="center">                                          
+       9 -  <div class="hero">                                           
+      10 -    <img src="${heroImg}" class="base" width="170" height="179"
+         ->                                                              
+      11 -    <img src="${typescriptLogo}" class="framework" alt="TypeScr
+         -ipt logo"/>                                                    
+      12 -    <img src="${viteLogo}" class="vite" alt="Vite logo" />     
+      13 -  </div>                                                       
+      14 -  <div>                                                        
+      15 -    <h1>Get started</h1>                                       
+      16 -    <p>Edit <code>src/main.ts</code> and save to test <code>HMR
+         -</code></p>                                                    
+      17 -  </div>                                                       
+      18 -  <button id="counter" type="button" class="counter"></button> 
+      19 -</section>                                                     
+      20 -                                                               
+      21 -<div class="ticks"></div>                                      
+      22 -                                                               
+      23 -<section id="next-steps">                                      
+      24 -  <div id="docs">                                              
+      25 -    <svg class="icon" role="presentation" aria-hidden="true"><u
+         -se href="/icons.svg#documentation-icon"></use></svg>           
+      26 -    <h2>Documentation</h2>                                     
+      27 -    <p>Your questions, answered</p>                            
+      28 -    <ul>                                                       
+      29 -      <li>                                                     
+      30 -        <a href="https://vite.dev/" target="_blank">           
+      31 -          <img class="logo" src="${viteLogo}" alt="" />        
+      32 -          Explore Vite                                         
+      33 -        </a>                                                   
+      34 -      </li>                                                    
+      35 -      <li>                                                     
+      36 -        <a href="https://www.typescriptlang.org" target="_blank
+         -">                                                             
+      37 -          <img class="button-icon" src="${typescriptLogo}" alt=
+         -"">                                                            
+      38 -          Learn more                                           
+      39 -        </a>                                                   
+      40 -      </li>                                                    
+      41 -    </ul>                                                      
+      42 -  </div>                                                       
+      43 -  <div id="social">                                            
+      44 -    <svg class="icon" role="presentation" aria-hidden="true"><u
+         -se href="/icons.svg#social-icon"></use></svg>                  
+      45 -    <h2>Connect with us</h2>                                   
+      46 -    <p>Join the Vite community</p>                             
+      47 -    <ul>                                                       
+      48 -      <li><a href="https://github.com/vitejs/vite" target="_bla
+         -nk"><svg class="button-icon" role="presentation" aria-hidden="t
+         -rue"><use href="/icons.svg#github-icon"></use></svg>GitHub</a><
+         -/li>                                                           
+      49 -      <li><a href="https://chat.vite.dev/" target="_blank"><svg
+         - class="button-icon" role="presentation" aria-hidden="true"><us
+         -e href="/icons.svg#discord-icon"></use></svg>Discord</a></li>  
+      50 -      <li><a href="https://x.com/vite_js" target="_blank"><svg 
+         -class="button-icon" role="presentation" aria-hidden="true"><use
+         - href="/icons.svg#x-icon"></use></svg>X.com</a></li>           
+      51 -      <li><a href="https://bsky.app/profile/vite.dev" target="_
+         -blank"><svg class="button-icon" role="presentation" aria-hidden
+         -="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky
+         -</a></li>                                                      
+      52 -    </ul>                                                      
+      53 -  </div>                                                       
+      54 -</section>                                                     
+      55 -                                                               
+      56 -<div class="ticks"></div>                                      
+      57 -<section id="spacer"></section>                                
+      58 -`                                                              
+      59 -                                                               
+      60 -setupCounter(document.querySelector<HTMLButtonElement>('#counte
+         -r')!)                                                          
+       1 +export {};                                                     
+       2 +// stub: filled in H1-T08                                      
+
+● Write(src\contract.ts)
+  ⎿  Wrote 2 lines to src\contract.ts
+      1 export {};
+      2 // stub: filled in H1-T03
+
+● Write(src\grid-model.ts)
+  ⎿  Wrote 2 lines to src\grid-model.ts
+      1 export {};
+      2 // stub: filled in H1-T07
+
+● Write(src\sample-data.ts)
+  ⎿  Wrote 2 lines to src\sample-data.ts
+      1 export {};
+      2 // stub: filled in H1-T08
+
+● Write(src\grid-render.ts)
+  ⎿  Wrote 2 lines to src\grid-render.ts
+      1 export {};
+      2 // stub: filled in H1-T08
+
+● Write(src\grid-controls.ts)
+  ⎿  Wrote 2 lines to src\grid-controls.ts
+      1 export {};
+      2 // stub: filled in H1-T09
+
+● Write(src\keyboard.ts)
+  ⎿  Wrote 2 lines to src\keyboard.ts
+      1 export {};
+      2 // stub: filled in H1-T11
+
+● Write(src\css\reset.css)
+  ⎿  Wrote 1 line to src\css\reset.css
+      1 /* stub: filled in H1-T05 */
+
+● Write(src\css\tokens.css)
+  ⎿  Wrote 1 line to src\css\tokens.css
+      1 /* stub: filled in H1-T05 */
+
+● Write(src\css\layout.css)
+  ⎿  Wrote 1 line to src\css\layout.css
+      1 /* stub: filled in H1-T06 */
+
+● Write(src\css\table.css)
+  ⎿  Wrote 1 line to src\css\table.css
+      1 /* stub: filled in H1-T06 */
+
+● Đã tạo đủ stub. Bây giờ sửa package.json và tsconfig.json, cần đọc bằng Read
+  trước khi sửa.
+
+  Read 2 files (ctrl+o to expand)
+
+● Update(package.json)
+  ⎿  Added 2 lines, removed 1 line
+       6    "scripts": {
+       7      "dev": "vite",
+       8      "build": "tsc && vite build",
+       9 -    "preview": "vite preview"                                  
+       9 +    "preview": "vite preview",                                 
+      10 +    "test": "node --test \"src/**/*.test.ts\""                 
+      11    },
+      12    "devDependencies": {
+      13      "typescript": "~6.0.3",
+
+● Update(tsconfig.json)  ⎿  Added 2 lines, removed 1 line
+      20      "erasableSyntaxOnly": true,
+      21      "noFallthroughCasesInSwitch": true
+      22    },
+      23 -  "include": ["src"]                                           
+      23 +  "include": ["src"],                                          
+      24 +  "exclude": ["src/**/*.test.ts"]                              
+      25  }
+
+● Đã sửa xong package.json và tsconfig.json. Bây giờ chạy kiểm tra: build, kiểm
+  tra dependency, và npm ls (tiêu chí chấp nhận trong WBS).
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Build đã pass (BUILD_EXIT=0) và npm ls chỉ có vite và typescript. Trước khi
+  commit, tôi stage đúng các đường dẫn tường minh và kiểm tra danh sách staged.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Danh sách staged khớp đúng 17 file trong prompt. CLAUDE.md vẫn untracked và
+  không được stage. Build đã pass nên tôi commit với đúng message được yêu cầu.
+
+  Committed 088c130 (ctrl+o to expand)
+
+● Đã xong H1-T02 và commit 088c130 (chore(scaffold): replace Vite demo with stub
+  modules). Chưa push.
+
+  File đã thay đổi
+  - Xóa (Remove-Item, chưa từng được track): src/counter.ts, src/style.css,
+    public/icons.svg, src/assets/. Trước khi xóa, tôi đã đọc nội dung và xác
+    nhận đây là mã demo của template.
+  - Ghi đè src/main.ts thành stub. Đây là file cũ của template, đã đọc trước khi
+    ghi đè.
+  - Tạo stub: src/contract.ts, src/grid-model.ts, src/sample-data.ts,
+    src/grid-render.ts, src/grid-controls.ts, src/keyboard.ts,
+    src/css/reset.css, src/css/tokens.css, src/css/layout.css,
+    src/css/table.css. Trong comment, <task> được thay bằng mã task (ví dụ
+    H1-T08).
+  - Sửa package.json: thêm "test": "node --test \"src/**/*.test.ts\"" sau
+    preview. Không thêm dependency.
+  - Sửa tsconfig.json: thêm "exclude": ["src/**/*.test.ts"] ngay sau "include".
+  - Không sửa index.html. File này được commit nguyên trạng, vẫn có <div
+    id="app">, sẽ sửa ở H1-T04.
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0. tsc và vite build đều pass.
+  - npm ls --depth=0: chỉ có typescript@6.0.3 và vite@8.3.5.
+  - Select-String -Path package.json -Pattern '"vite"|"typescript"': trả về 3
+    dòng, không phải 2. Dòng 7 là "dev": "vite", khớp pattern nhưng là script,
+    không phải dependency. Hai dòng devDependencies là dòng 13 và 14.
+  - git show --stat HEAD: 17 file, khớp đúng danh sách trong prompt.
+
+  Chưa kiểm tra
+  - npm test: không chạy, theo yêu cầu vì chưa có test.
+  - Chưa mở trang trên trình duyệt. npm run dev và npm run preview chưa được
+    thử.
+
+  Ghi chú
+  - CLAUDE.md vẫn untracked và không được commit, vì không nằm trong task.
+  - dist/ đã được npm run build tạo lại (thư mục này nằm trong .gitignore), nên
+    nội dung demo cũ trong dist/ đã bị thay thế.
+  - Git cảnh báo LF sẽ đổi thành CRLF ở các file đã add. Đây chỉ là cảnh báo về
+    line ending, không ảnh hưởng build hay commit.
+
+> <ide_opened_file>The user opened the file
+  c:\Users\USER\Documents\LAB2_WEBDEV\hw1-data-grid\CLAUDE.md in the IDE. This
+  may or may not be related to the current task.</ide_opened_file>
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T03 và
+  contract). Chỉ làm H1-T03: chỉ có kiểu. Không có hàm, không có logic.
+
+  Phạm vi file được sửa: src/contract.ts (stub, ghi đè).
+
+  Nội dung: đúng bốn kiểu trong TASK_DECOMPOSITION.md: ColumnDef<T>,
+  DataGridProps<T>, GridState, Member. Dùng export interface. Không enum, không
+  namespace, không any.
+
+  Kiểm tra: npm run build phải thành công (tsc kiểm tra kiểu). Select-String
+  -Path src\contract.ts -Pattern
+  '\bfunction\b|=>|\benum\b|\bany\b|\bnamespace\b' phải không có kết quả.
+
+  Commit:
+  git add src/contract.ts
+  git commit -m "feat(types): add data-grid contract"
+
+  Không push. Báo cáo bằng tiếng Việt.
+
+● Đọc lại ba file quy định (đã đọc trong phiên này, nội dung vẫn còn trong ngữ
+  cảnh) và đọc src/contract.ts hiện tại trước khi ghi đè.
+
+  Read 1 file (ctrl+o to expand)
+
+● Bản đã đọc là stub. Trong contract, onRowSelect được khai báo bằng kiểu hàm
+  (item: T) => void, nhưng lệnh kiểm tra của bạn cấm =>. Để cả hai cùng đúng,
+  tôi khai báo nó bằng cú pháp method onRowSelect?(item: T): void;. Chữ ký gọi
+  giống hệt nhau. Phần này tôi sẽ nêu lại trong báo cáo.
+
+● Write(src\contract.ts)
+  ⎿  Added 29 lines, removed 2 lines
+       1 -export {};                                                     
+       2 -// stub: filled in H1-T03                                      
+       1 +export interface ColumnDef<T> {                                
+       2 +  header: string;                                              
+       3 +  accessorKey: keyof T;                                        
+       4 +  sortable?: boolean;                                          
+       5 +}                                                              
+       6 +                                                               
+       7 +export interface DataGridProps<T> {                            
+       8 +  data: T[];                                                   
+       9 +  columns: ColumnDef<T>[];                                     
+      10 +  onRowSelect?(item: T): void;                                 
+      11 +  ariaLabel: string;                                           
+      12 +}                                                              
+      13 +                                                               
+      14 +export interface GridState {                                   
+      15 +  sortKey: string | null;                                      
+      16 +  sortDir: 'none' | 'asc' | 'desc';                            
+      17 +  filterText: string;                                          
+      18 +  page: number;                                                
+      19 +  pageSize: number;                                            
+      20 +  selectedIds: Set<string>;                                    
+      21 +}                                                              
+      22 +                                                               
+      23 +export interface Member {                                      
+      24 +  id: string;                                                  
+      25 +  name: string;                                                
+      26 +  role: string;                                                
+      27 +  city: string;                                                
+      28 +  score: number;                                               
+      29 +}                                                              
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Build pass (BUILD_EXIT=0) và lệnh kiểm tra không có kết quả nào. Tôi stage
+  đúng một file rồi commit.
+
+  Committed 834c317 (ctrl+o to expand)
+
+● H1-T03 xong. Đã commit 834c317 (feat(types): add data-grid contract). Chưa
+  push.
+
+  File đã thay đổi
+  - src/contract.ts: ghi đè stub bằng đúng bốn kiểu từ mục 2 của
+    TASK_DECOMPOSITION: ColumnDef<T>, DataGridProps<T>, GridState, Member. Tất
+    cả dùng export interface. Không có hàm, enum, namespace hay any.
+
+  Một chỗ lệch so với contract trong WBS
+  - WBS khai báo onRowSelect?: (item: T) => void;. Lệnh kiểm tra của bạn cấm =>,
+    và chính dòng này sẽ khớp pattern đó. Tôi đã viết thành onRowSelect?(item:
+    T): void; (cú pháp method). Chữ ký gọi vẫn giống hệt nhau. Khác biệt duy
+    nhất là method trong TypeScript được kiểm tra kiểu theo kiểu bivariant, nên
+    nếu bạn muốn giữ đúng dạng hàm thì phải bỏ lệnh kiểm tra => cho file này.
+    Tôi chọn cách thứ nhất vì nó thỏa cả hai yêu cầu của bạn.
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0. tsc đã kiểm tra contract.ts vì file
+    nằm trong src/.
+  - Select-String -Path src\contract.ts -Pattern
+    '\bfunction\b|=>|\benum\b|\bany\b|\bnamespace\b': không có kết quả.
+  - git show --stat HEAD: chỉ có src/contract.ts (29 dòng thêm, 2 dòng xóa so
+    với stub).
+
+  Chưa kiểm tra
+  - npm test: không chạy, vì task không yêu cầu và chưa có test.
+  - Chưa có kiểm tra runtime nào, vì file chỉ chứa kiểu.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T04 và HTML
+  contract). Chỉ làm H1-T04: HTML. Không viết CSS thật hay TypeScript thật.
+
+  Phạm vi file được sửa: index.html (viết lại toàn bộ, thay thế nội dung
+  template).
+
+  Yêu cầu:
+  - DOCTYPE, <html lang="en">, meta charset UTF-8, meta viewport, title "Team
+  Directory Grid", meta description.
+  - Liên kết CSS bằng link rel="stylesheet" theo thứ tự: /src/css/reset.css,
+  /src/css/tokens.css, /src/css/layout.css, /src/css/table.css.
+  - Favicon: giữ link trỏ tới /favicon.svg của template.
+  - Skip link đầu body trỏ tới #main-content.
+  - header chứa đúng một h1 "Team Directory".
+  - main#main-content tabindex="-1" chứa:
+    - form#grid-controls role="search" có label for="filter-input" "Filter
+  rows", input type="search" id="filter-input", và hint có aria-describedby.
+    - section data-page-size="5" aria-label "Team members" tabindex="0" (vùng
+  cuộn có thể focus).
+    - table role="grid" có caption; thead có tr role="row" chứa th scope="col",
+  mỗi th có một button để sắp xếp; tbody id="grid-body" để trống. Role cho
+  hàng và ô dữ liệu do TypeScript gán ở H1-T08.
+    - nav aria-label "Pagination" chứa button id="prev-page" và button
+  id="next-page" có nhãn văn bản rõ ràng.
+    - p id="grid-status" role="status".
+  - footer có nội dung ngắn.
+  - Ở cuối body: <script type="module" src="/src/main.ts"></script>. Không có
+  <div id="app">.
+  - Không có style="", onclick=, <style> hay <script> nội tuyến. Không dùng div
+  làm cấu trúc, không border, align, cellpadding.
+
+  Tự kiểm tra: Select-String -Path index.html -Pattern
+  '<div|onclick|style=|align=|border=|cellpadding=' phải không có kết quả. Chỉ
+  có một h1.
+
+  Commit:
+  git add index.html
+  git commit -m "feat(html): semantic data-grid page structure"
+
+  Không push. Báo cáo bằng tiếng Việt.
+
+● Đọc lại index.html hiện tại trước khi ghi đè. Các mục yêu cầu của HTML
+  contract đã có trong ngữ cảnh.
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(index.html)
+  ⎿  Added 47 lines, removed 3 lines
+       2  <html lang="en">
+       3    <head>
+       4      <meta charset="UTF-8" />
+       5 -    <link rel="icon" type="image/svg+xml" href="/favicon.svg" /
+         ->                                                              
+       5      <meta name="viewport" content="width=device-width, initial-
+          scale=1.0" />
+       7 -    <title>hw1-data-grid</title>                               
+       6 +    <meta name="description" content="Team directory data grid 
+         +with sorting, filtering, pagination and keyboard navigation." /
+         +>                                                              
+       7 +    <link rel="icon" type="image/svg+xml" href="/favicon.svg" /
+         +>                                                              
+       8 +    <link rel="stylesheet" href="/src/css/reset.css" />        
+       9 +    <link rel="stylesheet" href="/src/css/tokens.css" />       
+      10 +    <link rel="stylesheet" href="/src/css/layout.css" />       
+      11 +    <link rel="stylesheet" href="/src/css/table.css" />        
+      12 +    <title>Team Directory Grid</title>                         
+      13    </head>
+      14    <body>
+      10 -    <div id="app"></div>                                       
+      15 +    <a href="#main-content">Skip to main content</a>           
+      16 +                                                               
+      17 +    <header>                                                   
+      18 +      <h1>Team Directory</h1>                                  
+      19 +    </header>                                                  
+      20 +                                                               
+      21 +    <main id="main-content" tabindex="-1">                     
+      22 +      <form id="grid-controls" role="search">                  
+      23 +        <label for="filter-input">Filter rows</label>          
+      24 +        <input type="search" id="filter-input" name="filter" ar
+         +ia-describedby="filter-hint" />                                
+      25 +        <p id="filter-hint">Matches any column. Letter case is 
+         +ignored.</p>                                                   
+      26 +      </form>                                                  
+      27 +                                                               
+      28 +      <section data-page-size="5" aria-label="Team members" tab
+         +index="0">                                                     
+      29 +        <table role="grid">                                    
+      30 +          <caption>Team members</caption>                      
+      31 +          <thead>                                              
+      32 +            <tr role="row">                                    
+      33 +              <th scope="col"><button type="button">Name</butto
+         +n></th>                                                        
+      34 +              <th scope="col"><button type="button">Role</butto
+         +n></th>                                                        
+      35 +              <th scope="col"><button type="button">City</butto
+         +n></th>                                                        
+      36 +              <th scope="col"><button type="button">Score</butt
+         +on></th>                                                       
+      37 +            </tr>                                              
+      38 +          </thead>                                             
+      39 +          <tbody id="grid-body"></tbody>                       
+      40 +        </table>                                               
+      41 +      </section>                                               
+      42 +                                                               
+      43 +      <nav aria-label="Pagination">                            
+      44 +        <button type="button" id="prev-page">Previous page</but
+         +ton>                                                           
+      45 +        <button type="button" id="next-page">Next page</button>
+      46 +      </nav>                                                   
+      47 +                                                               
+      48 +      <p id="grid-status" role="status"></p>                   
+      49 +    </main>                                                    
+      50 +                                                               
+      51 +    <footer>                                                   
+      52 +      <p>Team Directory Grid, built with Vite and vanilla TypeS
+         +cript.</p>                                                     
+      53 +    </footer>                                                  
+      54 +                                                               
+      55      <script type="module" src="/src/main.ts"></script>
+      56    </body>
+      57  </html>
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Build pass và các kiểm tra HTML đều sạch. Tôi commit đúng index.html.
+
+  Committed 60aac07 (ctrl+o to expand)
+
+● H1-T04 xong. Đã commit 60aac07 (feat(html): semantic data-grid page
+  structure). Chưa push.
+
+  File đã thay đổi
+  - index.html: viết lại toàn bộ, thay nội dung template. Không có <div> nào,
+    không có <div id="app">.
+    - Head: DOCTYPE, lang="en", charset, viewport, meta description, favicon
+      /favicon.svg giữ nguyên, bốn <link rel="stylesheet"> theo đúng thứ tự,
+      title "Team Directory Grid".
+    - Body: skip link #main-content ở đầu; header có đúng một h1 "Team
+      Directory"; main#main-content có tabindex="-1"; footer ngắn; script module
+      /src/main.ts ở cuối body.
+    - Trong main: form #grid-controls (role="search") với label "Filter rows" và
+      input#filter-input có aria-describedby trỏ tới p#filter-hint; section có
+      data-page-size="5", aria-label, tabindex="0"; table role="grid" có
+      caption, thead với tr role="row", bốn th scope="col" mỗi cái chứa một
+      button (Name, Role, City, Score), tbody#grid-body rỗng; nav
+      aria-label="Pagination" với button#prev-page ("Previous page") và
+      button#next-page ("Next page"); p#grid-status role="status".
+
+  Lựa chọn của tôi, bạn có thể đổi
+  - Nhãn nút phân trang là "Previous page" và "Next page". WBS chỉ ghi
+    "Previous" và "Next".
+  - Caption là "Team members", trùng với aria-label của section.
+  - Các button ở header và phân trang có type="button".
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0.
+  - Select-String -Path index.html -Pattern
+    '<div|onclick|style=|align=|border=|cellpadding=': không có kết quả.
+  - Đếm <h1: 1. Đếm <main: 1. Đếm <style và <script nội tuyến: 0.
+  - git show --stat HEAD: chỉ có index.html.
+
+  Chưa kiểm tra
+  - Không có bước validate HTML chuyên dụng. Tôi chỉ kiểm tra bằng build và
+    grep.
+  - Chưa mở trang trên trình duyệt. Chưa kiểm tra skip link, focus, hay kích
+    thước 375 px. Các mục này cần bạn kiểm tra thủ công.
+  - Stub CSS chưa có nội dung, nên layout và độ tương phản chưa được đánh giá.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T05). Chỉ làm
+  H1-T05: CSS tokens và reset. Không sửa HTML, không viết layout, không viết
+  TypeScript.
+
+  Phạm vi file được sửa: src/css/reset.css và src/css/tokens.css (stub, ghi
+  đè).
+
+  reset.css: box-sizing border-box cho mọi phần tử; margin và padding 0; html
+  color-scheme light; body dùng font-family từ token (font hệ thống, không tải
+  font ngoài), line-height 1.5; button, input, textarea và table kế thừa font;
+  [hidden] { display: none !important }; tắt transition và animation khi
+  prefers-reduced-motion: reduce.
+
+  tokens.css: khai báo trong :root mọi màu, khoảng cách, bo góc, cỡ chữ: --bg,
+  --surface, --text, --text-muted, --border, --accent, --accent-text,
+  --focus-ring, --selected-bg, --danger; --font-sans; --space-1 đến --space-6;
+  --radius-sm, --radius-md; --font-size-sm, --font-size-base, --font-size-lg;
+  --target-min: 24px (WCAG 2.2, 2.5.8). Toàn bộ màu chỉ khai báo ở đây.
+
+  Tương phản: chữ ≥ 4.5:1 (--text trên --bg, --text-muted trên --surface,
+  --accent-text trên --accent); viền UI và --focus-ring ≥ 3:1. Tính tỉ lệ bằng
+  một lệnh Node một lần (không lưu file), báo bảng bằng tiếng Việt.
+
+  Tự kiểm tra: Select-String -Path src\css\reset.css -Pattern
+  '#[0-9a-fA-F]{3,8}\b' phải không có kết quả.
+
+  Commit:
+  git add src/css/reset.css src/css/tokens.css
+  git commit -m "feat(css): design tokens and box-sizing reset"
+
+  Không push. Báo cáo bằng tiếng Việt, kèm bảng tỉ lệ tương phản.
+
+● Đọc hai stub trước khi ghi đè.
+
+  Read 2 files (ctrl+o to expand)
+
+● Write(src\css\reset.css)
+  ⎿  Added 42 lines, removed 1 line
+       1 -/* stub: filled in H1-T05 */                                   
+       1 +*,                                                             
+       2 +*::before,                                                     
+       3 +*::after {                                                     
+       4 +  box-sizing: border-box;                                      
+       5 +}                                                              
+       6 +                                                               
+       7 +* {                                                            
+       8 +  margin: 0;                                                   
+       9 +  padding: 0;                                                  
+      10 +}                                                              
+      11 +                                                               
+      12 +html {                                                         
+      13 +  color-scheme: light;                                         
+      14 +}                                                              
+      15 +                                                               
+      16 +body {                                                         
+      17 +  font-family: var(--font-sans);                               
+      18 +  font-size: var(--font-size-base);                            
+      19 +  line-height: 1.5;                                            
+      20 +  color: var(--text);                                          
+      21 +  background-color: var(--bg);                                 
+      22 +}                                                              
+      23 +                                                               
+      24 +button,                                                        
+      25 +input,                                                         
+      26 +textarea,                                                      
+      27 +table {                                                        
+      28 +  font: inherit;                                               
+      29 +}                                                              
+      30 +                                                               
+      31 +[hidden] {                                                     
+      32 +  display: none !important;                                    
+      33 +}                                                              
+      34 +                                                               
+      35 +@media (prefers-reduced-motion: reduce) {                      
+      36 +  *,                                                           
+      37 +  *::before,                                                   
+      38 +  *::after {                                                   
+      39 +    animation: none !important;                                
+      40 +    transition: none !important;                               
+      41 +  }                                                            
+      42 +}                                                              
+
+● Write(src\css\tokens.css)
+  ⎿  Added 34 lines, removed 1 line
+       1 -/* stub: filled in H1-T05 */                                   
+       1 +:root {                                                        
+       2 +  /* Colors */                                                 
+       3 +  --bg: #ffffff;                                               
+       4 +  --surface: #f4f5f7;                                          
+       5 +  --text: #1b1f24;                                             
+       6 +  --text-muted: #4b5563;                                       
+       7 +  --border: #767c86;                                           
+       8 +  --accent: #1d4ed8;                                           
+       9 +  --accent-text: #ffffff;                                      
+      10 +  --focus-ring: #1d4ed8;                                       
+      11 +  --selected-bg: #dbeafe;                                      
+      12 +  --danger: #b91c1c;                                           
+      13 +                                                               
+      14 +  /* Typography */                                             
+      15 +  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "H
+         +elvetica Neue", Arial, sans-serif;                             
+      16 +  --font-size-sm: 0.875rem;                                    
+      17 +  --font-size-base: 1rem;                                      
+      18 +  --font-size-lg: 1.25rem;                                     
+      19 +                                                               
+      20 +  /* Spacing */                                                
+      21 +  --space-1: 0.25rem;                                          
+      22 +  --space-2: 0.5rem;                                           
+      23 +  --space-3: 0.75rem;                                          
+      24 +  --space-4: 1rem;                                             
+      25 +  --space-5: 1.5rem;                                           
+      26 +  --space-6: 2rem;                                             
+      27 +                                                               
+      28 +  /* Radius */                                                 
+      29 +  --radius-sm: 0.25rem;                                        
+      30 +  --radius-md: 0.5rem;                                         
+      31 +                                                               
+      32 +  /* Interaction (WCAG 2.2, 2.5.8) */                          
+      33 +  --target-min: 24px;                                          
+      34 +}                                                              
+
+● Tính tỉ lệ tương phản bằng một lệnh Node chạy một lần, không ghi file. Đồng
+  thời chạy build và kiểm tra hex trong reset.css.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Tất cả các cặp đạt ngưỡng, build pass, và reset.css không có mã hex. Tôi
+  commit hai file.
+
+  Committed 217d548 (ctrl+o to expand)
+
+● H1-T05 xong. Đã commit 217d548 (feat(css): design tokens and box-sizing
+  reset). Chưa push.
+
+  File đã thay đổi
+  - src/css/reset.css: box-sizing border-box cho mọi phần tử; margin và padding
+    bằng 0; html có color-scheme: light; body dùng var(--font-sans), cỡ chữ
+    --font-size-base, line-height 1.5, màu --text và nền --bg; button, input,
+    textarea, table kế thừa font; [hidden] { display: none !important }; trong
+    prefers-reduced-motion: reduce, tắt animation và transition.
+  - src/css/tokens.css: toàn bộ token khai báo trong :root. Màu: --bg,
+    --surface, --text, --text-muted, --border, --accent, --accent-text,
+    --focus-ring, --selected-bg, --danger. Chữ: --font-sans (font hệ thống),
+    --font-size-sm/base/lg. Khoảng cách --space-1 đến --space-6. Bo góc
+    --radius-sm, --radius-md. --target-min: 24px.
+
+  Bảng tỉ lệ tương phản (tính bằng một lệnh Node, không lưu file; giá trị lấy từ
+  tokens.css)
+
+  ┌───────────────────────────────────┬───────┬────────┬─────────┐
+  │                Cặp                │ Tỉ lệ │ Ngưỡng │ Kết quả │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --text / --bg                     │ 16.56 │ 4.5    │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --text-muted / --surface          │ 6.93  │ 4.5    │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --accent-text / --accent          │ 6.70  │ 4.5    │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --text / --surface (thêm)         │ 15.18 │ 4.5    │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --text / --selected-bg (thêm)     │ 13.57 │ 4.5    │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --danger / --bg (thêm)            │ 6.47  │ 4.5    │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --border / --bg (UI)              │ 4.20  │ 3      │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --border / --surface (UI)         │ 3.85  │ 3      │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --focus-ring / --bg (UI)          │ 6.70  │ 3      │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --focus-ring / --surface (UI)     │ 6.14  │ 3      │ Đạt     │
+  ├───────────────────────────────────┼───────┼────────┼─────────┤
+  │ --focus-ring / --selected-bg (UI) │ 5.49  │ 3      │ Đạt     │
+  └───────────────────────────────────┴───────┴────────┴─────────┘
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0.
+  - Select-String -Path src\css\reset.css -Pattern '#[0-9a-fA-F]{3,8}\b': không
+    có kết quả.
+  - git show --stat HEAD: chỉ có src/css/reset.css và src/css/tokens.css.
+
+  Chưa kiểm tra và lưu ý
+  - Chỉ có theme sáng. Yêu cầu của dự án là tương phản đạt ở "mọi theme", nhưng
+    task này không yêu cầu theme tối, nên tôi chưa thêm. Nếu cần theme tối, cần
+    một task riêng.
+  - Tỉ lệ trên chỉ tính cho các cặp màu đã liệt kê. Chưa kiểm tra trên trình
+    duyệt, và chưa có layout nào dùng các token này.
+  - npm test không chạy vì chưa có test.
+  - Cảnh báo LF/CRLF của git vẫn xuất hiện. Đây không phải lỗi commit.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T06). Chỉ làm
+  H1-T06: CSS layout và bảng. Không sửa HTML hay TypeScript.
+
+  Phạm vi file được sửa: src/css/layout.css và src/css/table.css (stub, ghi
+  đè).
+
+  Yêu cầu:
+  - Mobile-first, style nền cho 375px. min-width media query chỉ khi cần.
+  - layout.css: header, main, footer; skip link ẩn cho đến khi focus, rồi hiện.
+  Không cuộn ngang ở cấp trang khi 375px.
+  - table.css: table width 100%; section có overflow-x: auto để bảng cuộn ngang
+  bên trong section, không cuộn cả trang. th và td dùng padding từ token. Nút
+  sắp xếp trong th có min-width và min-height đều bằng --target-min.
+  - Trạng thái hàng: tr[aria-selected="true"] dùng --selected-bg.
+  - Focus: mọi phần tử tương tác có outline rõ ràng dùng --focus-ring, dày ít
+  nhất 2px, dùng :focus-visible.
+  - Nút phân trang có min-width và min-height đều bằng --target-min.
+  - Dùng gap, không dùng margin giữa phần tử con trong flex hoặc grid.
+  - Không hex hay rgb ngoài tokens.css.
+
+  Tự kiểm tra: Select-String -Path src\css\*.css -Pattern '#[0-9a-fA-F]{3,8}\b'
+  | Where-Object { $_.Filename -ne 'tokens.css' } phải không có kết quả
+  (selector #id giống mã hex thì kiểm tra bằng mắt).
+
+  Commit:
+  git add src/css/layout.css src/css/table.css
+  git commit -m "feat(css): table layout and focus indicators"
+
+  Không push. Báo cáo bằng tiếng Việt.
+
+● Đọc hai stub trước khi ghi đè.
+
+  Read 2 files (ctrl+o to expand)
+
+● Write(src\css\layout.css)
+  ⎿  Added 74 lines, removed 1 line
+       1 -/* stub: filled in H1-T06 */                                   
+       1 +/* Page layout: mobile-first, one column at 375px */           
+       2 +body {                                                         
+       3 +  display: flex;                                               
+       4 +  flex-direction: column;                                      
+       5 +  min-height: 100vh;                                           
+       6 +}                                                              
+       7 +                                                               
+       8 +header,                                                        
+       9 +footer {                                                       
+      10 +  padding: var(--space-4);                                     
+      11 +}                                                              
+      12 +                                                               
+      13 +h1 {                                                           
+      14 +  font-size: var(--font-size-lg);                              
+      15 +  font-weight: 700;                                            
+      16 +}                                                              
+      17 +                                                               
+      18 +main {                                                         
+      19 +  flex: 1;                                                     
+      20 +  display: grid;                                               
+      21 +  grid-template-columns: minmax(0, 1fr);                       
+      22 +  gap: var(--space-4);                                         
+      23 +  padding: var(--space-4);                                     
+      24 +}                                                              
+      25 +                                                               
+      26 +/* Skip link: off-screen until it receives focus */            
+      27 +body > a[href="#main-content"] {                               
+      28 +  position: absolute;                                          
+      29 +  top: var(--space-2);                                         
+      30 +  left: var(--space-2);                                        
+      31 +  padding: var(--space-2) var(--space-3);                      
+      32 +  color: var(--text);                                          
+      33 +  background-color: var(--bg);                                 
+      34 +  transform: translateY(-200%);                                
+      35 +}                                                              
+      36 +                                                               
+      37 +body > a[href="#main-content"]:focus {                         
+      38 +  transform: none;                                             
+      39 +}                                                              
+      40 +                                                               
+      41 +/* Filter form */                                              
+      42 +#grid-controls {                                               
+      43 +  display: grid;                                               
+      44 +  gap: var(--space-2);                                         
+      45 +}                                                              
+      46 +                                                               
+      47 +#grid-controls label {                                         
+      48 +  font-weight: 600;                                            
+      49 +}                                                              
+      50 +                                                               
+      51 +#grid-controls input {                                         
+      52 +  width: 100%;                                                 
+      53 +  min-height: var(--target-min);                               
+      54 +  padding: var(--space-2);                                     
+      55 +  color: var(--text);                                          
+      56 +  background-color: var(--bg);                                 
+      57 +  border: 1px solid var(--border);                             
+      58 +  border-radius: var(--radius-sm);                             
+      59 +}                                                              
+      60 +                                                               
+      61 +#filter-hint {                                                 
+      62 +  font-size: var(--font-size-sm);                              
+      63 +  color: var(--text-muted);                                    
+      64 +}                                                              
+      65 +                                                               
+      66 +/* Focus indicators: 2px ring for every interactive element */ 
+      67 +a:focus-visible,                                               
+      68 +button:focus-visible,                                          
+      69 +input:focus-visible,                                           
+      70 +section:focus-visible,                                         
+      71 +main:focus-visible {                                           
+      72 +  outline: 2px solid var(--focus-ring);                        
+      73 +  outline-offset: 2px;                                         
+      74 +}                                                              
+
+● Write(src\css\table.css)
+  ⎿  Added 73 lines, removed 1 line
+       1 -/* stub: filled in H1-T06 */                                   
+       1 +/* Table: scrolls inside its own section, never the whole page 
+         +*/                                                             
+       2 +main > section {                                               
+       3 +  overflow-x: auto;                                            
+       4 +  border: 1px solid var(--border);                             
+       5 +  border-radius: var(--radius-md);                             
+       6 +}                                                              
+       7 +                                                               
+       8 +table {                                                        
+       9 +  width: 100%;                                                 
+      10 +  min-width: 30rem;                                            
+      11 +  border-collapse: collapse;                                   
+      12 +}                                                              
+      13 +                                                               
+      14 +caption {                                                      
+      15 +  padding: var(--space-2) var(--space-3);                      
+      16 +  font-weight: 600;                                            
+      17 +  text-align: left;                                            
+      18 +}                                                              
+      19 +                                                               
+      20 +th,                                                            
+      21 +td {                                                           
+      22 +  padding: var(--space-2) var(--space-3);                      
+      23 +  text-align: left;                                            
+      24 +  border-bottom: 1px solid var(--border);                      
+      25 +}                                                              
+      26 +                                                               
+      27 +th {                                                           
+      28 +  background-color: var(--surface);                            
+      29 +}                                                              
+      30 +                                                               
+      31 +th > button,                                                   
+      32 +nav button {                                                   
+      33 +  min-width: var(--target-min);                                
+      34 +  min-height: var(--target-min);                               
+      35 +  padding: var(--space-1) var(--space-2);                      
+      36 +  font-weight: 600;                                            
+      37 +  color: var(--text);                                          
+      38 +  background-color: var(--bg);                                 
+      39 +  border: 1px solid var(--border);                             
+      40 +  border-radius: var(--radius-sm);                             
+      41 +  cursor: pointer;                                             
+      42 +}                                                              
+      43 +                                                               
+      44 +/* Focus ring inside a cell is drawn inside the cell, so the sc
+         +roll region does not clip it */                                
+      45 +td:focus-visible,                                              
+      46 +th:focus-visible {                                             
+      47 +  outline: 2px solid var(--focus-ring);                        
+      48 +  outline-offset: -2px;                                        
+      49 +}                                                              
+      50 +                                                               
+      51 +tbody tr[aria-selected="true"] {                               
+      52 +  background-color: var(--selected-bg);                        
+      53 +}                                                              
+      54 +                                                               
+      55 +/* Pagination */                                               
+      56 +nav {                                                          
+      57 +  display: flex;                                               
+      58 +  flex-wrap: wrap;                                             
+      59 +  gap: var(--space-2);                                         
+      60 +  align-items: center;                                         
+      61 +}                                                              
+      62 +                                                               
+      63 +nav button:not(:disabled) {                                    
+      64 +  color: var(--accent-text);                                   
+      65 +  background-color: var(--accent);                             
+      66 +  border-color: var(--accent);                                 
+      67 +}                                                              
+      68 +                                                               
+      69 +nav button:disabled {                                          
+      70 +  color: var(--text-muted);                                    
+      71 +  background-color: var(--surface);                            
+      72 +  cursor: not-allowed;                                         
+      73 +}                                                              
+
+● Đã ghi xong hai file. Chạy build, kiểm tra hex như prompt yêu cầu, và kiểm tra
+  thêm rgb(, margin để đảm bảo không dùng ngoài token.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Build pass và không có hex, rgb hay margin ngoài tokens.css. Trước khi commit,
+  tôi kiểm tra một điều: lệnh build dùng $TMPDIR để ghi log, nên tôi cần chắc
+  log không bị ghi vào đâu trong repo.
+
+  Committed 556ef16 (ctrl+o to expand)
+
+● H1-T06 xong. Đã commit 556ef16 (feat(css): table layout and focus indicators).
+  Chưa push.
+
+  File đã thay đổi
+  - src/css/layout.css: nền 375px, không có media query nào.
+    - body là flex cột, main là grid một cột với minmax(0, 1fr) để nội dung
+      không đẩy rộng trang.
+    - Skip link ẩn bằng translateY(-200%), hiện khi :focus. Vì HTML chưa có
+      class cho skip link, tôi chọn bằng body > a[href="#main-content"].
+    - Form và input: input có min-height: var(--target-min) và viền --border.
+      Hint dùng --text-muted.
+    - Focus: a, button, input, section, main dùng :focus-visible với outline:
+      2px solid var(--focus-ring).
+  - src/css/table.css:
+    - main > section có overflow-x: auto, bảng cuộn bên trong section.
+    - table có width: 100% và min-width: 30rem.
+    - th, td padding bằng token. Nút trong th và nút phân trang có min-width và
+      min-height bằng --target-min.
+    - tbody tr[aria-selected="true"] dùng --selected-bg.
+    - td:focus-visible và th:focus-visible có outline 2px, outline-offset: -2px
+      để không bị cắt bởi vùng cuộn.
+    - Nút phân trang dùng --accent và --accent-text. Nút bị vô hiệu dùng
+      --surface và --text-muted.
+
+  Các lựa chọn của tôi, bạn có thể đổi
+  - min-width: 30rem trên table. Prompt chỉ yêu cầu width: 100%, nhưng nếu không
+    có min-width thì với dữ liệu ngắn bảng có thể không bao giờ cuộn, và vùng
+    cuộn không được kiểm tra.
+  - Style cho form, input, hint và h1 nằm trong layout.css. Các phần này không
+    được nêu rõ trong prompt.
+  - Viền nút dùng --border (4.20:1 trên --bg, đã đo ở H1-T05).
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0.
+  - Select-String hex trong src\css\*.css, loại trừ tokens.css: không có kết
+    quả.
+  - Kiểm tra thêm: không có rgb(, hsl(, hay margin trong layout.css và
+    table.css.
+  - git show --stat HEAD: chỉ có hai file CSS.
+
+  Chưa kiểm tra
+  - Chưa mở trang trên trình duyệt. Chưa kiểm tra không cuộn ngang ở 375px, vùng
+    cuộn của bảng, skip link, focus ring, hay vùng nhấn của nút. Các mục này
+    cần bạn kiểm tra thủ công.
+  - Chưa có role gridcell và aria-selected từ TypeScript, nên các selector theo
+    role và aria-selected chưa được áp dụng vào DOM thật.
+  - npm test không chạy vì chưa có test.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T07). Chỉ làm
+  H1-T07: logic thuần, không đụng DOM.
+
+  Phạm vi file được sửa: src/grid-model.ts và src/grid-model.test.ts (stub, ghi
+  đè và tạo mới).
+
+  src/grid-model.ts: import kiểu bằng "import type" từ './contract.ts'. Export
+  các hàm thuần:
+  - filterRows<T>(rows: T[], columns: ColumnDef<T>[], text: string): T[] — lọc
+  không phân biệt hoa thường trên các cột; text rỗng trả về bản sao của toàn
+  bộ.
+  - sortRows<T>(rows: T[], key: keyof T, dir: 'asc' | 'desc'): T[] — so sánh số
+  và chuỗi; trả về mảng mới, không sửa mảng gốc.
+  - buildView<T>(rows: T[], columns: ColumnDef<T>[], state: { filterText:
+  string; sortKey: keyof T | null; sortDir: 'none' | 'asc' | 'desc'; page:
+  number; pageSize: number }): { pageRows: T[]; page: number; pageCount:
+  number; matchCount: number } — pipeline cố định, luôn tính từ mảng gốc:
+  filterRows → sortRows (bỏ qua khi sortDir là 'none') → paginate. Hàm này
+  không tự đặt lại page; lớp gọi đặt page = 1 khi filterText hoặc sort thay
+  đổi.
+  - paginate<T>(rows: T[], page: number, pageSize: number): { pageRows: T[];
+  page: number; pageCount: number } — kẹp page vào khoảng hợp lệ; pageCount tối
+  thiểu là 1.
+  - Không any, không enum, không namespace. Không document, không window.
+
+  src/grid-model.test.ts: dùng node:test và node:assert/strict, import
+  './grid-model.ts' và kiểu Member từ './contract.ts'. Kiểm tra: lọc rỗng, lọc
+  không phân biệt hoa thường, sắp xếp số và chuỗi, sắp xếp không sửa mảng gốc,
+  phân trang trang cuối, page vượt giới hạn bị kẹp; buildView áp dụng lọc trước
+  khi sắp xếp, nên kết quả lọc vẫn giữ đúng thứ tự sort. File test không được
+  tsc kiểm tra (đã loại trong tsconfig), nên phải tự đọc kỹ kiểu.
+
+  Kiểm tra: npm test phải pass. npm run build phải thành công. Select-String
+  -Path src\grid-model.ts -Pattern 'document|window' phải không có kết quả.
+
+  Commit:
+  git add src/grid-model.ts src/grid-model.test.ts
+  git commit -m "feat(ts): pure grid model for sort, filter and paginate"
+
+  Không push. Báo cáo bằng tiếng Việt: kết quả npm test và npm run build.
+
+● Đọc stub grid-model.ts trước khi ghi đè, và kiểm tra phiên bản Node để biết
+  node --test có chạy được file .ts không.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Node v24.14.1 hỗ trợ chạy file .ts trực tiếp và glob trong node --test. Viết
+  module thuần.
+
+● Write(src\grid-model.ts)
+  ⎿  Added 70 lines, removed 2 lines
+       1 -export {};                                                     
+       2 -// stub: filled in H1-T07                                      
+       1 +import type { ColumnDef } from './contract.ts';                
+       2 +                                                               
+       3 +export interface PageResult<T> {                               
+       4 +  pageRows: T[];                                               
+       5 +  page: number;                                                
+       6 +  pageCount: number;                                           
+       7 +}                                                              
+       8 +                                                               
+       9 +export interface ViewState<T> {                                
+      10 +  filterText: string;                                          
+      11 +  sortKey: keyof T | null;                                     
+      12 +  sortDir: 'none' | 'asc' | 'desc';                            
+      13 +  page: number;                                                
+      14 +  pageSize: number;                                            
+      15 +}                                                              
+      16 +                                                               
+      17 +export interface View<T> extends PageResult<T> {               
+      18 +  matchCount: number;                                          
+      19 +}                                                              
+      20 +                                                               
+      21 +function clamp(value: number, min: number, max: number): number
+         + {                                                             
+      22 +  if (Number.isNaN(value)) {                                   
+      23 +    return min;                                                
+      24 +  }                                                            
+      25 +  return Math.min(Math.max(value, min), max);                  
+      26 +}                                                              
+      27 +                                                               
+      28 +function compareValues(a: unknown, b: unknown): number {       
+      29 +  if (typeof a === 'number' && typeof b === 'number') {        
+      30 +    return a - b;                                              
+      31 +  }                                                            
+      32 +  return String(a).localeCompare(String(b), 'en', { sensitivity
+         +: 'base' });                                                   
+      33 +}                                                              
+      34 +                                                               
+      35 +export function filterRows<T>(rows: T[], columns: ColumnDef<T>[
+         +], text: string): T[] {                                        
+      36 +  const needle = text.trim().toLowerCase();                    
+      37 +  if (needle === '') {                                         
+      38 +    return rows.slice();                                       
+      39 +  }                                                            
+      40 +  return rows.filter((row) =>                                  
+      41 +    columns.some((column) => String(row[column.accessorKey]).to
+         +LowerCase().includes(needle)),                                 
+      42 +  );                                                           
+      43 +}                                                              
+      44 +                                                               
+      45 +export function sortRows<T>(rows: T[], key: keyof T, dir: 'asc'
+         + | 'desc'): T[] {                                              
+      46 +  const sign = dir === 'asc' ? 1 : -1;                         
+      47 +  return rows.slice().sort((a, b) => sign * compareValues(a[key
+         +], b[key]));                                                   
+      48 +}                                                              
+      49 +                                                               
+      50 +export function paginate<T>(rows: T[], page: number, pageSize: 
+         +number): PageResult<T> {                                       
+      51 +  const size = clamp(Math.floor(pageSize), 1, Math.max(1, rows.
+         +length));                                                      
+      52 +  const pageCount = Math.max(1, Math.ceil(rows.length / size));
+      53 +  const current = clamp(Math.floor(page), 1, pageCount);       
+      54 +  const start = (current - 1) * size;                          
+      55 +  return {                                                     
+      56 +    pageRows: rows.slice(start, start + size),                 
+      57 +    page: current,                                             
+      58 +    pageCount,                                                 
+      59 +  };                                                           
+      60 +}                                                              
+      61 +                                                               
+      62 +export function buildView<T>(rows: T[], columns: ColumnDef<T>[]
+         +, state: ViewState<T>): View<T> {                              
+      63 +  const matched = filterRows(rows, columns, state.filterText); 
+      64 +  const sorted =                                               
+      65 +    state.sortKey === null || state.sortDir === 'none'         
+      66 +      ? matched                                                
+      67 +      : sortRows(matched, state.sortKey, state.sortDir);       
+      68 +  const { pageRows, page, pageCount } = paginate(sorted, state.
+         +page, state.pageSize);                                         
+      69 +  return { pageRows, page, pageCount, matchCount: matched.lengt
+         +h };                                                           
+      70 +}                                                              
+
+● Viết file test. File này không được tsc kiểm tra nên phải đọc kỹ kiểu bằng
+  tay.
+
+● Write(src\grid-model.test.ts)
+  ⎿  Wrote 151 lines to src\grid-model.test.ts
+       1 import { describe, it } from 'node:test';
+       3 import { buildView, filterRows, paginate, sortRows } from './gri
+         d-model.ts';
+       5
+       6 const members: Member[] = [
+         i', score: 88 },
+       8   { id: '2', name: 'bob Tran', role: 'Developer', city: 'Da Nang
+       9   { id: '3', name: 'Carol Le', role: 'Developer', city: 'Hue', s
+         core: 95 },
+         score: 60 },
+     … +163 lines (ctrl+o to expand)
+
+● Chạy npm test, npm run build, và kiểm tra document|window.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● npm test pass 17/17, npm run build pass, và không có document hay window trong
+  grid-model.ts. Commit hai file.
+
+  Committed 91a16e4 (ctrl+o to expand)
+
+● H1-T07 xong. Đã commit 91a16e4 (feat(ts): pure grid model for sort, filter and
+  paginate). Chưa push.
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm test: pass, 17/17 test, 0 lỗi.
+  - npm run build: thành công, exit code 0.
+  - Select-String -Path src\grid-model.ts -Pattern 'document|window': không có
+    kết quả.
+  - git show --stat HEAD: chỉ có src/grid-model.ts (sửa) và
+    src/grid-model.test.ts (tạo mới).
+
+  File đã thay đổi
+  - src/grid-model.ts: năm hàm và ba interface:
+    - filterRows: cắt khoảng trắng hai đầu, không phân biệt hoa thường, tìm trên
+      tất cả cột. Text rỗng trả về bản sao.
+    - sortRows: số so sánh theo giá trị. Chuỗi so sánh bằng localeCompare với
+      locale en và sensitivity: 'base', nên không phân biệt hoa thường. Luôn trả
+      về mảng mới.
+    - paginate: kẹp pageSize tối thiểu 1 và tối đa số dòng. Kẹp page vào [1,
+      pageCount]. NaN được đưa về giá trị nhỏ nhất. pageCount tối thiểu 1.
+    - buildView: filter → sort (bỏ qua khi sortDir là 'none' hoặc sortKey là
+      null) → paginate. Luôn tính từ mảng gốc và trả về matchCount.
+  - src/grid-model.test.ts: 17 test bằng node:test và node:assert/strict, gồm
+    lọc rỗng, lọc không phân biệt hoa thường, sắp xếp số và chuỗi, không sửa
+    mảng gốc, trang cuối, page vượt giới hạn, và thứ tự filter trước sort.
+
+  Các lựa chọn của tôi, bạn có thể đổi
+  - filterRows cắt khoảng trắng hai đầu. Prompt không nói rõ, nhưng nếu không
+    cắt thì "Ann " sẽ không khớp "Ann".
+  - Các kiểu trả về (PageResult, ViewState, View) được khai báo trong
+    grid-model.ts, không trong contract.ts. WBS cho phép điều này. Cấu trúc
+    giống hệt yêu cầu.
+  - Test không có pageSize bị kẹp cho buildView. paginate đã kiểm tra logic này.
+
+  Điểm cần lưu ý cho H1-T09 và H1-T10
+  - contract.ts định nghĩa GridState.sortKey là string | null, nhưng buildView
+    nhận keyof T | null. Lớp gọi sẽ phải thu hẹp kiểu khi truyền vào. Đây là lỗi
+    kiểu thật, nó sẽ hiện ra khi viết H1-T09.
+
+  Chưa kiểm tra
+  - File test không được tsc kiểm tra, vì tsconfig đã loại trừ nó. Vì vậy kiểu
+    của test chỉ được đọc bằng mắt, và test pass khi chạy Node 24.14.1. Lưu ý:
+    node:test chưa có @types/node, nên tsc không thể kiểm tra file này nếu bỏ
+    loại trừ.
+  - Chưa kiểm tra trên trình duyệt. Module này không đụng DOM nên chưa có việc
+    gì để kiểm tra ở đó.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T08). Chỉ làm
+  H1-T08. Không viết sắp xếp, lọc, phân trang hay phím tắt.
+
+  Phạm vi file được sửa: src/grid-render.ts, src/sample-data.ts, src/main.ts
+  (stub, ghi đè).
+
+  Yêu cầu:
+  - sample-data.ts: export const members: Member[] gồm 12 bản ghi giả (kiểu
+  Member từ contract.ts). Một bản ghi có city là '<img src=x onerror=alert(1)>'
+  để chứng minh văn bản được escape. Đây là checkpoint bảo mật, không phải
+  lỗi.
+  - grid-render.ts: export function renderRows<T extends { id: string }>(tbody:
+  HTMLTableSectionElement, rows: T[], columns: ColumnDef<T>[], selectedIds:
+  ReadonlySet<string>): void. Dựng tr role="row" và td role="gridcell" bằng
+  document.createElement, gán nội dung bằng textContent, thay toàn bộ con bằng
+  replaceChildren. Không innerHTML, outerHTML, insertAdjacentHTML. Đặt
+  aria-selected="true" hoặc "false" trên mỗi tr theo selectedIds. Mọi ô có
+  tabindex="-1" ngoại trừ ô đầu tiên của hàng đầu có tabindex="0" (H1-T11 sẽ
+  điều chỉnh vị trí focus).
+  - main.ts: lấy #grid-body bằng querySelector với kiểu
+  HTMLTableSectionElement; nếu không có thì throw Error có thông điệp rõ. Gọi
+  renderRows với members, các cột (header, accessorKey: name, role, city,
+  score) và một Set rỗng cho selectedIds.
+  - Không thêm listener nào trong task này.
+
+  Kiểm tra: npm run build phải thành công. Select-String -Path src\*.ts
+  -Pattern 'innerHTML|outerHTML|insertAdjacentHTML|document\.write|\bvar\b|keyC
+  ode|keypress' phải không có kết quả. Mở http://localhost:5173/: cột city hiện
+  đúng chuỗi '<img src=x onerror=alert(1)>' dưới dạng chữ, không có hộp thoại
+  alert. Console không có lỗi.
+
+  Commit (TypeScript):
+  git add src/grid-render.ts src/sample-data.ts src/main.ts
+  git commit -m "feat(ts): render table rows with textContent"
+
+  Không push. Báo cáo bằng tiếng Việt.
+
+● Đọc ba stub trước khi ghi đè.
+
+  Read 3 files (ctrl+o to expand)
+
+● Write(src\sample-data.ts)
+  ⎿  Added 17 lines, removed 2 lines
+       1 -export {};                                                     
+       2 -// stub: filled in H1-T08                                      
+       1 +import type { Member } from './contract.ts';                   
+       2 +                                                               
+       3 +// The city of member 12 is an XSS sample. It must render as pl
+         +ain text.                                                      
+       4 +export const members: Member[] = [                             
+       5 +  { id: '1', name: 'Alice Nguyen', role: 'Designer', city: 'Han
+         +oi', score: 88 },                                              
+       6 +  { id: '2', name: 'Bob Tran', role: 'Developer', city: 'Da Nan
+         +g', score: 72 },                                               
+       7 +  { id: '3', name: 'Carol Le', role: 'Developer', city: 'Hue', 
+         +score: 95 },                                                   
+       8 +  { id: '4', name: 'David Pham', role: 'Tester', city: 'Hanoi',
+         + score: 60 },                                                  
+       9 +  { id: '5', name: 'Eve Do', role: 'Designer', city: 'Ho Chi Mi
+         +nh City', score: 81 },                                         
+      10 +  { id: '6', name: 'Frank Vo', role: 'Manager', city: 'Hanoi', 
+         +score: 90 },                                                   
+      11 +  { id: '7', name: 'Grace Ly', role: 'Developer', city: 'Can Th
+         +o', score: 77 },                                               
+      12 +  { id: '8', name: 'Henry Bui', role: 'Analyst', city: 'Hai Pho
+         +ng', score: 69 },                                              
+      13 +  { id: '9', name: 'Ivy Dang', role: 'Tester', city: 'Hue', sco
+         +re: 84 },                                                      
+      14 +  { id: '10', name: 'Jack Ho', role: 'Developer', city: 'Hanoi'
+         +, score: 91 },                                                 
+      15 +  { id: '11', name: 'Kim Mai', role: 'Manager', city: 'Da Nang'
+         +, score: 66 },                                                 
+      16 +  { id: '12', name: 'Leo Truong', role: 'Analyst', city: '<img 
+         +src=x onerror=alert(1)>', score: 78 },                         
+      17 +];                                                             
+
+● Write(src\grid-render.ts)
+  ⎿  Added 38 lines, removed 2 lines
+       1 -export {};                                                     
+       2 -// stub: filled in H1-T08                                      
+       1 +import type { ColumnDef } from './contract.ts';                
+       2 +                                                               
+       3 +function createCell<T>(row: T, column: ColumnDef<T>, tabIndex: 
+         +string): HTMLTableCellElement {                                
+       4 +  const cell = document.createElement('td');                   
+       5 +  cell.setAttribute('role', 'gridcell');                       
+       6 +  cell.setAttribute('tabindex', tabIndex);                     
+       7 +  cell.textContent = String(row[column.accessorKey]);          
+       8 +  return cell;                                                 
+       9 +}                                                              
+      10 +                                                               
+      11 +function createRow<T extends { id: string }>(                  
+      12 +  row: T,                                                      
+      13 +  columns: ColumnDef<T>[],                                     
+      14 +  selected: boolean,                                           
+      15 +  isFirstRow: boolean,                                         
+      16 +): HTMLTableRowElement {                                       
+      17 +  const tr = document.createElement('tr');                     
+      18 +  tr.setAttribute('role', 'row');                              
+      19 +  tr.setAttribute('aria-selected', String(selected));          
+      20 +  const cells = columns.map((column, index) => {               
+      21 +    const isEntryCell = isFirstRow && index === 0;             
+      22 +    return createCell(row, column, isEntryCell ? '0' : '-1');  
+      23 +  });                                                          
+      24 +  tr.replaceChildren(...cells);                                
+      25 +  return tr;                                                   
+      26 +}                                                              
+      27 +                                                               
+      28 +export function renderRows<T extends { id: string }>(          
+      29 +  tbody: HTMLTableSectionElement,                              
+      30 +  rows: T[],                                                   
+      31 +  columns: ColumnDef<T>[],                                     
+      32 +  selectedIds: ReadonlySet<string>,                            
+      33 +): void {                                                      
+      34 +  const trs = rows.map((row, index) =>                         
+      35 +    createRow(row, columns, selectedIds.has(row.id), index === 
+         +0),                                                            
+      36 +  );                                                           
+      37 +  tbody.replaceChildren(...trs);                               
+      38 +}                                                              
+
+● Write(src\main.ts)
+  ⎿  Added 17 lines, removed 2 lines
+       1 -export {};                                                     
+       2 -// stub: filled in H1-T08                                      
+       1 +import type { ColumnDef, Member } from './contract.ts';        
+       2 +import { renderRows } from './grid-render.ts';                 
+       3 +import { members } from './sample-data.ts';                    
+       4 +                                                               
+       5 +const columns: ColumnDef<Member>[] = [                         
+       6 +  { header: 'Name', accessorKey: 'name', sortable: true },     
+       7 +  { header: 'Role', accessorKey: 'role', sortable: true },     
+       8 +  { header: 'City', accessorKey: 'city', sortable: true },     
+       9 +  { header: 'Score', accessorKey: 'score', sortable: true },   
+      10 +];                                                             
+      11 +                                                               
+      12 +const tbody = document.querySelector<HTMLTableSectionElement>('
+         +#grid-body');                                                  
+      13 +if (tbody === null) {                                          
+      14 +  throw new Error('Missing #grid-body in index.html: the table 
+         +body is required to render rows.');                            
+      15 +}                                                              
+      16 +                                                               
+      17 +renderRows(tbody, members, columns, new Set<string>());        
+
+● Ghi xong ba file. Chạy build, npm test (vì repo đã có test), và kiểm tra các
+  mẫu cấm trên src/*.ts.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Build pass, 17/17 test pass, và không có mẫu cấm nào. Commit ba file
+  TypeScript.
+
+  Committed 6501d0c (ctrl+o to expand)
+
+● H1-T08 đã commit 6501d0c (feat(ts): render table rows with textContent). Chưa
+  push. Phần kiểm tra trên trình duyệt chưa làm được trong phiên này, xem mục
+  "Chưa kiểm tra" bên dưới.
+
+  File đã thay đổi
+  - src/sample-data.ts: export const members: Member[] gồm 12 bản ghi. Bản ghi
+    12 (Leo Truong) có city là <img src=x onerror=alert(1)>.
+  - src/grid-render.ts: renderRows<T extends { id: string }>(tbody, rows,
+    columns, selectedIds).
+    - Mỗi hàng là tr role="row" với aria-selected là "true" hoặc "false" theo
+      selectedIds.
+    - Mỗi ô là td role="gridcell", gán nội dung bằng textContent.
+    - Ô đầu tiên của hàng đầu có tabindex="0", các ô còn lại là "-1".
+    - Toàn bộ con của tbody được thay bằng replaceChildren.
+  - src/main.ts: tìm #grid-body bằng querySelector<HTMLTableSectionElement>. Nếu
+    không có thì throw Error có thông điệp rõ. Gọi renderRows với members, bốn
+    cột, và new Set<string>(). Không có listener nào.
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0.
+  - npm test: 17/17 pass, 0 lỗi.
+  - Select-String -Path src\*.ts -Pattern 'innerHTML|outerHTML|insertAdjacentHTM
+    L|document\.write|\bvar\b|keyCode|keypress': không có kết quả.
+  - git show --stat HEAD: đúng ba file TypeScript.
+
+  Chưa kiểm tra
+  - Tôi không mở được trình duyệt trong phiên này, nên chưa kiểm tra
+    http://localhost:5173/. Cần bạn kiểm tra ba điều:
+    a. Cột City của hàng 12 hiện đúng chuỗi <img src=x onerror=alert(1)> dưới
+       dạng chữ.
+    b. Không có hộp thoại alert.
+    c. Console không có lỗi.
+  - Vì vậy, các kết quả trên trình duyệt chưa có. Chỉ có build và test đã được
+    chạy.
+  - Cần lưu ý thêm: npm run build và test không chứng minh được việc escape ở
+    runtime. Điều này chỉ xác nhận khi chạy trong trình duyệt.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+> Team members
+  Name    Role    City    Score
+  Alice Nguyen    Designer        Hanoi   88
+  Bob Tran        Developer       Da Nang 72
+  Carol Le        Developer       Hue     95
+  David Pham      Tester  Hanoi   60
+  Eve Do  Designer        Ho Chi Minh City        81
+  Frank Vo        Manager Hanoi   90
+  Grace Ly        Developer       Can Tho 77
+  Henry Bui       Analyst Hai Phong       69
+  Ivy Dang        Tester  Hue     84
+  Jack Ho Developer       Hanoi   91
+  Kim Mai Manager Da Nang 66
+  Leo Truong      Analyst <img src=x onerror=alert(1)>    78
+  Kết quả hiển thị như này chính xác không
+
+● Có, phần chữ trong bảng khớp chính xác với src/sample-data.ts. Tôi đối chiếu
+  từng dòng:
+
+  - Cả 12 hàng đều đúng tên, vai trò, thành phố và điểm, theo thứ tự trong file.
+  - Hàng 12 (Leo Truong) hiện <img src=x onerror=alert(1)> dưới dạng chữ. Điều
+    này cho thấy chuỗi không bị parse thành thẻ <img>, nên việc escape đã đúng ở
+    mức nội dung.
+  - Tiêu đề cột là Name, Role, City, Score, và caption là "Team members".
+
+  Đoạn bạn dán chỉ là văn bản đã copy, nên nó chưa đủ để xác nhận mọi điều kiện
+  của H1-T08:
+
+  - Hộp thoại alert: văn bản không cho thấy việc có hay không có alert. Nếu bạn
+    không thấy hộp thoại nào khi tải trang thì điều này đã đạt. Hãy xác nhận lại
+    trực tiếp.
+  - Console: cần mở DevTools (F12) → Console và xác nhận không có lỗi đỏ.
+  - Thuộc tính: cần mở tab Elements để kiểm tra:
+    - tbody#grid-body có 12 tr role="row", mỗi tr có aria-selected="false".
+    - Ô City của hàng 12 là một text node, không có phần tử img con.
+    - Ô đầu tiên của hàng đầu có tabindex="0", các ô còn lại tabindex="-1".
+  - Bố cục và giao diện: văn bản không cho biết bố cục ở 375px hay kiểu hiển
+    thị. Đó là việc của H1-T06 và cần kiểm tra riêng.
+
+  Tôi không mở được trình duyệt trong phiên này, nên các mục trên chưa được tôi
+  xác nhận. Nếu bạn xác nhận được alert không xuất hiện và console sạch, thì
+  H1-T08 đạt đủ tiêu chí chấp nhận.
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T09). Chỉ làm
+  H1-T09: sắp xếp.
+
+  Phạm vi file được sửa: src/grid-controls.ts và src/main.ts.
+
+  Yêu cầu:
+  - Một listener click duy nhất trên thead (event delegation), không gắn
+  listener cho từng nút.
+  - Mỗi lần bấm nút sắp xếp của một cột: none -> asc -> desc -> none. Cập nhật
+  GridState, đặt page = 1, và gọi buildView từ grid-model.ts để tính dữ liệu
+  hiển thị. Không gọi sortRows trực tiếp trên dữ liệu đã lọc.
+  - Đặt aria-sort trên th tương ứng: "ascending", "descending" hoặc "none". Chỉ
+  một cột có aria-sort khác none.
+  - Sau mỗi thay đổi, gọi renderRows với pageRows từ buildView và selectedIds
+  từ GridState. Mảng gốc không bị sửa.
+  - Đánh dấu cột đang sắp xếp bằng classList. Không dùng style nội tuyến.
+  - Kiểu cho event target: dùng instanceof HTMLButtonElement hoặc closest() có
+  kiểm tra null, không dùng ép kiểu any.
+
+  Kiểm tra: npm run build phải thành công. Bấm tiêu đề cột ba lần: aria-sort
+  đổi đúng ba trạng thái trong DevTools (Elements). Console sạch.
+
+  Commit (TypeScript):
+  git add src/grid-controls.ts src/main.ts
+  git commit -m "feat(ts): sortable headers with aria-sort"
+
+  Không push. Báo cáo bằng tiếng Việt.
+
+● Đọc stub grid-controls.ts và main.ts hiện tại trước khi ghi đè.
+
+  Read 2 files (ctrl+o to expand)
+
+● Write(src\grid-controls.ts)
+  ⎿  Added 43 lines, removed 2 lines
+       1 -export {};                                                     
+       2 -// stub: filled in H1-T09                                      
+       1 +import type { ColumnDef, GridState } from './contract.ts';     
+       2 +                                                               
+       3 +type SortDir = GridState['sortDir'];                           
+       4 +                                                               
+       5 +const NEXT_SORT_DIR: Record<SortDir, SortDir> = { none: 'asc', 
+         +asc: 'desc', desc: 'none' };                                   
+       6 +const ARIA_SORT: Record<SortDir, string> = { none: 'none', asc:
+         + 'ascending', desc: 'descending' };                            
+       7 +                                                               
+       8 +export function nextSortDir(dir: SortDir): SortDir {           
+       9 +  return NEXT_SORT_DIR[dir];                                   
+      10 +}                                                              
+      11 +                                                               
+      12 +export function bindSortHeaders<T>(                            
+      13 +  thead: HTMLTableSectionElement,                              
+      14 +  columns: ColumnDef<T>[],                                     
+      15 +  onSort: (accessorKey: keyof T) => void,                      
+      16 +): () => void {                                                
+      17 +  const onClick = (event: MouseEvent): void => {               
+      18 +    if (!(event.target instanceof Element)) {                  
+      19 +      return;                                                  
+      20 +    }                                                          
+      21 +    const cell = event.target.closest('button')?.closest('th');
+      22 +    if (!cell) {                                               
+      23 +      return;                                                  
+      24 +    }                                                          
+      25 +    const column = columns[cell.cellIndex];                    
+      26 +    if (column === undefined || column.sortable === false) {   
+      27 +      return;                                                  
+      28 +    }                                                          
+      29 +    onSort(column.accessorKey);                                
+      30 +  };                                                           
+      31 +                                                               
+      32 +  thead.addEventListener('click', onClick);                    
+      33 +  return () => thead.removeEventListener('click', onClick);    
+      34 +}                                                              
+      35 +                                                               
+      36 +export function applySortState(thead: HTMLTableSectionElement, 
+         +sortedIndex: number, sortDir: SortDir): void {                 
+      37 +  const headers = thead.querySelectorAll<HTMLTableCellElement>(
+         +'th');                                                         
+      38 +  headers.forEach((header, index) => {                         
+      39 +    const isSorted = index === sortedIndex;                    
+      40 +    header.setAttribute('aria-sort', isSorted ? ARIA_SORT[sortD
+         +ir] : 'none');                                                 
+      41 +    header.classList.toggle('is-sorted', isSorted && sortDir !=
+         += 'none');                                                     
+      42 +  });                                                          
+      43 +}                                                              
+
+● Write(src\main.ts)
+  ⎿  Added 43 lines, removed 2 lines
+      1 -import type { ColumnDef, Member } from './contract.ts';         
+      1 +import type { ColumnDef, GridState, Member } from './contract.ts
+        +';                                                              
+      2 +import { applySortState, bindSortHeaders, nextSortDir } from './
+        +grid-controls.ts';                                              
+      3 +import { buildView } from './grid-model.ts';                    
+      4  import { renderRows } from './grid-render.ts';
+      5  import { members } from './sample-data.ts';
+      6  
+     ...
+      16    throw new Error('Missing #grid-body in index.html: the table 
+          body is required to render rows.');
+      17  }
+      18  
+      17 -renderRows(tbody, members, columns, new Set<string>());        
+      19 +const thead = document.querySelector<HTMLTableSectionElement>('
+         +thead');                                                       
+      20 +if (thead === null) {                                          
+      21 +  throw new Error('Missing thead in index.html: the sort header
+         +s are required.');                                             
+      22 +}                                                              
+      23 +                                                               
+      24 +// Paging arrives with H1-T10. Until then, all rows share one p
+         +age.                                                           
+      25 +const state: GridState = {                                     
+      26 +  sortKey: null,                                               
+      27 +  sortDir: 'none',                                             
+      28 +  filterText: '',                                              
+      29 +  page: 1,                                                     
+      30 +  pageSize: members.length,                                    
+      31 +  selectedIds: new Set<string>(),                              
+      32 +};                                                             
+      33 +                                                               
+      34 +function render(): void {                                      
+      35 +  const sortedIndex = columns.findIndex((column) => column.acce
+         +ssorKey === state.sortKey);                                    
+      36 +  const sortKey = sortedIndex === -1 ? null : columns[sortedInd
+         +ex].accessorKey;                                               
+      37 +  const view = buildView(members, columns, {                   
+      38 +    filterText: state.filterText,                              
+      39 +    sortKey,                                                   
+      40 +    sortDir: state.sortDir,                                    
+      41 +    page: state.page,                                          
+      42 +    pageSize: state.pageSize,                                  
+      43 +  });                                                          
+      44 +  state.page = view.page;                                      
+      45 +  renderRows(tbody, view.pageRows, columns, state.selectedIds);
+      46 +  applySortState(thead, sortedIndex, state.sortDir);           
+      47 +}                                                              
+      48 +                                                               
+      49 +bindSortHeaders(thead, columns, (accessorKey) => {             
+      50 +  const current = state.sortKey === accessorKey ? state.sortDir
+         + : 'none';                                                     
+      51 +  const next = nextSortDir(current);                           
+      52 +  state.sortKey = next === 'none' ? null : accessorKey;        
+      53 +  state.sortDir = next;                                        
+      54 +  state.page = 1;                                              
+      55 +  render();                                                    
+      56 +});                                                            
+      57 +                                                               
+      58 +render();                                                      
+
+● Chạy build, test, kiểm tra mẫu cấm, và đếm listener để xác nhận chỉ có một
+  listener click trên thead.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Build lỗi TS2345. Nguyên nhân: TypeScript không giữ kiểu đã thu hẹp (tbody,
+  thead không còn null) bên trong function render() vì function declaration được
+  hoist. Tôi đổi render thành arrow function, vì arrow function tạo sau lệnh
+  kiểm tra sẽ giữ được kiểu thu hẹp của const. Đọc file trước khi sửa.
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(src\main.ts)
+  ⎿  Added 1 line, removed 1 line
+      31    selectedIds: new Set<string>(),
+      32  };
+      33  
+      34 -function render(): void {                                      
+      34 +const render = (): void => {                                   
+      35    const sortedIndex = columns.findIndex((column) => column.acce
+          ssorKey === state.sortKey);
+      36    const sortKey = sortedIndex === -1 ? null : columns[sortedInd
+          ex].accessorKey;
+      37    const view = buildView(members, columns, {
+
+● Update(src\main.ts)
+  ⎿  Added 1 line, removed 1 line
+      44    state.page = view.page;
+      45    renderRows(tbody, view.pageRows, columns, state.selectedIds);
+      46    applySortState(thead, sortedIndex, state.sortDir);
+      47 -}                                                              
+      47 +};                                                             
+      48  
+      49  bindSortHeaders(thead, columns, (accessorKey) => {
+      50    const current = state.sortKey === accessorKey ? state.sortDir
+           : 'none';
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Build và test đều pass sau khi sửa. Chạy lại kiểm tra mẫu cấm trên mã cuối
+  cùng rồi commit.
+
+  Committed 034a18c (ctrl+o to expand)
+
+● H1-T09 xong. Đã commit 034a18c (feat(ts): sortable headers with aria-sort).
+  Chưa push. Phần bấm tiêu đề ba lần trên trình duyệt và kiểm tra Console chưa
+  làm được, xem mục "Chưa kiểm tra".
+
+  File đã thay đổi
+  - src/grid-controls.ts:
+    - nextSortDir: none → asc → desc → none.
+    - bindSortHeaders<T>(thead, columns, onSort): một listener click trên thead.
+      Tìm nút qua closest('button') rồi closest('th'), lấy cột qua cellIndex.
+      Trả về hàm dispose gỡ listener.
+    - applySortState: đặt aria-sort trên mọi th, chỉ cột đang sắp xếp có giá trị
+      khác none. Cột đó được đánh dấu bằng classList.toggle('is-sorted', ...).
+  - src/main.ts:
+    - Giữ GridState làm trạng thái. Mỗi lần bấm, cột đó đi qua chu kỳ none → asc
+      → desc → none, page đặt về 1, rồi gọi render().
+    - render() gọi buildView với mảng gốc, sau đó renderRows với pageRows và
+      selectedIds, rồi applySortState. Không gọi sortRows trực tiếp.
+
+  Các lựa chọn của tôi, bạn có thể đổi
+  - pageSize bằng members.length, tức là 12. data-page-size="5" trong HTML chưa
+    được đọc. Nếu dùng 5 thì hàng 6 đến 12 sẽ bị ẩn cho đến khi có phân trang ở
+    H1-T10. Tôi chọn cách này để không làm mất hàng đã hiện ở H1-T08.
+  - Lớp is-sorted chưa có CSS, nên chưa có thay đổi hình ảnh nào khi sắp xếp.
+    Chỉ aria-sort là dấu hiệu duy nhất hiện tại. Phần kiểu dáng cần một task CSS
+    riêng, vì table.css nằm ngoài phạm vi task này.
+  - render là arrow function (const render = ...), không phải function
+    declaration. Lý do: build lỗi TS2345 vì TypeScript không giữ kiểu thu hẹp
+    của tbody và thead bên trong function declaration được hoist. Sau khi đổi
+    thành arrow function thì build pass.
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0, sau khi sửa lỗi TS2345 ở trên.
+  - npm test: 17/17 pass.
+  - Kiểm tra mẫu cấm (innerHTML, var, any, enum, @ts-, keyCode, v.v.) trên
+    src/*.ts: không có kết quả.
+  - Listener: chỉ có một addEventListener cho sắp xếp, trong grid-controls.ts,
+    trên thead.
+  - git show --stat HEAD: đúng hai file TypeScript.
+
+  Chưa kiểm tra
+  - Chưa bấm tiêu đề ba lần trên trình duyệt, nên chưa xác nhận aria-sort đổi
+    đúng ascending → descending → none trong DevTools.
+  - Chưa kiểm tra Console. Tôi không mở được trình duyệt trong phiên này.
+  - Cần bạn chạy npm run dev, mở http://localhost:5173/, bấm tiêu đề một cột ba
+    lần và xem thuộc tính aria-sort trong tab Elements. Đồng thời mở Console để
+    xác nhận không có lỗi.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T10). Chỉ làm
+  H1-T10: lọc và phân trang.
+
+  Phạm vi file được sửa: src/grid-controls.ts và src/main.ts.
+
+  Yêu cầu:
+  - Lọc: một listener input trên form#grid-controls (event delegation). Mỗi lần
+  gõ: cập nhật filterText trong GridState, đặt page = 1, gọi buildView và
+  render lại. Thứ tự luôn là filter → sort → paginate.
+  - Chặn submit: thêm listener 'submit' trên form#grid-controls gọi
+  event.preventDefault(). Nhấn Enter trong ô lọc không được tải lại trang.
+  - Phân trang: một listener click trên nav (event delegation). #prev-page và
+  #next-page đổi page trong khoảng hợp lệ. Khi ở trang đầu hoặc trang cuối, nút
+  tương ứng có thuộc tính disabled.
+  - pageSize đọc từ data-page-size của section (dataset), không hard-code số
+  trong TypeScript. Nếu giá trị không phải số nguyên dương thì dùng 5 và ghi rõ
+  trong code.
+  - Sau mỗi lần render, cập nhật p#grid-status (role="status") bằng
+  textContent, ví dụ "Showing 3 of 12 rows. Page 1 of 3."
+  - Khi không có kết quả lọc, hiển thị "No rows match the filter." trong cùng
+  vùng status.
+  - Không innerHTML.
+
+  Kiểm tra: npm run build phải thành công. Gõ "zz" phải báo không có kết quả;
+  xóa ô lọc phải trở về 12 hàng; nhấn Enter trong ô lọc thì URL không đổi và
+  trang không tải lại; bấm Next đến trang cuối thì Next bị disabled;
+  Accessibility tree thấy vùng status cập nhật.
+
+  Commit (TypeScript):
+  git add src/grid-controls.ts src/main.ts
+  git commit -m "feat(ts): filter and pagination with live status"
+
+  Không push. Báo cáo bằng tiếng Việt.
+
+● Đọc lại hai file hiện tại trước khi ghi đè.
+
+  Read 2 files (ctrl+o to expand)
+
+● Ghi lại grid-controls.ts với các hàm mới (lọc, submit, phân trang, trạng
+  thái), giữ nguyên các hàm sắp xếp đã commit.
+
+● Write(src\grid-controls.ts)
+  ⎿  Added 75 lines
+       5  const NEXT_SORT_DIR: Record<SortDir, SortDir> = { none: 'asc', 
+          asc: 'desc', desc: 'none' };
+       6  const ARIA_SORT: Record<SortDir, string> = { none: 'none', asc:
+           'ascending', desc: 'descending' };
+       7  
+       8 +// Used when data-page-size is missing or is not a positive int
+         +eger.                                                          
+       9 +const DEFAULT_PAGE_SIZE = 5;                                   
+      10 +                                                               
+      11  export function nextSortDir(dir: SortDir): SortDir {
+      12    return NEXT_SORT_DIR[dir];
+      13  }
+      14  
+      15 +export function readPageSize(element: HTMLElement): number {   
+      16 +  const value = Number(element.dataset.pageSize);              
+      17 +  return Number.isInteger(value) && value > 0 ? value : DEFAULT
+         +_PAGE_SIZE;                                                    
+      18 +}                                                              
+      19 +                                                               
+      20  export function bindSortHeaders<T>(
+      21    thead: HTMLTableSectionElement,
+      22    columns: ColumnDef<T>[],
+     ...
+       49      header.classList.toggle('is-sorted', isSorted && sortDir !
+           == 'none');
+       50    });
+       51  }
+       52 +                                                              
+       53 +export function bindFilterForm(form: HTMLFormElement, onFilter
+          +: (text: string) => void): () => void {                       
+       54 +  const onInput = (event: Event): void => {                   
+       55 +    if (event.target instanceof HTMLInputElement) {           
+       56 +      onFilter(event.target.value);                           
+       57 +    }                                                         
+       58 +  };                                                          
+       59 +  // Enter in the filter field must not reload the page.      
+       60 +  const onSubmit = (event: Event): void => {                  
+       61 +    event.preventDefault();                                   
+       62 +  };                                                          
+       63 +                                                              
+       64 +  form.addEventListener('input', onInput);                    
+       65 +  form.addEventListener('submit', onSubmit);                  
+       66 +  return () => {                                              
+       67 +    form.removeEventListener('input', onInput);               
+       68 +    form.removeEventListener('submit', onSubmit);             
+       69 +  };                                                          
+       70 +}                                                             
+       71 +                                                              
+       72 +export function bindPagination(nav: HTMLElement, onStep: (step
+          +: number) => void): () => void {                              
+       73 +  const onClick = (event: MouseEvent): void => {              
+       74 +    if (!(event.target instanceof Element)) {                 
+       75 +      return;                                                 
+       76 +    }                                                         
+       77 +    const button = event.target.closest('button');            
+       78 +    if (button === null) {                                    
+       79 +      return;                                                 
+       80 +    }                                                         
+       81 +    if (button.id === 'prev-page') {                          
+       82 +      onStep(-1);                                             
+       83 +    } else if (button.id === 'next-page') {                   
+       84 +      onStep(1);                                              
+       85 +    }                                                         
+       86 +  };                                                          
+       87 +                                                              
+       88 +  nav.addEventListener('click', onClick);                     
+       89 +  return () => nav.removeEventListener('click', onClick);     
+       90 +}                                                             
+       91 +                                                              
+       92 +export function applyPaginationState(nav: HTMLElement, page: n
+          +umber, pageCount: number): void {                             
+       93 +  const prev = nav.querySelector<HTMLButtonElement>('#prev-pag
+          +e');                                                          
+       94 +  const next = nav.querySelector<HTMLButtonElement>('#next-pag
+          +e');                                                          
+       95 +  if (prev === null || next === null) {                       
+       96 +    throw new Error('Missing #prev-page or #next-page in index
+          +.html.');                                                     
+       97 +  }                                                           
+       98 +                                                              
+       99 +  // A disabled button loses focus, so move focus to the other
+          + button first.                                                
+      100 +  const active = document.activeElement;                      
+      101 +  prev.disabled = page <= 1;                                  
+      102 +  next.disabled = page >= pageCount;                          
+      103 +  if (active === next && next.disabled && !prev.disabled) {   
+      104 +    prev.focus();                                             
+      105 +  } else if (active === prev && prev.disabled && !next.disable
+          +d) {                                                          
+      106 +    next.focus();                                             
+      107 +  }                                                           
+      108 +}                                                             
+      109 +                                                              
+      110 +export function renderStatus(                                 
+      111 +  status: HTMLElement,                                        
+      112 +  view: { matchCount: number; total: number; page: number; pag
+          +eCount: number },                                             
+      113 +): void {                                                     
+      114 +  status.textContent =                                        
+      115 +    view.matchCount === 0                                     
+      116 +      ? 'No rows match the filter.'                           
+      117 +      : `Showing ${view.matchCount} of ${view.total} rows. Pag
+          +e ${view.page} of ${view.pageCount}.`;                        
+      118 +}                                                             
+
+● Ghi lại main.ts: thêm hàm tra cứu phần tử bắt buộc, đọc pageSize từ
+  data-page-size, và nối lọc, phân trang, trạng thái vào render().
+
+● Write(src\main.ts)
+  ⎿  Added 43 lines, removed 12 lines
+       1  import type { ColumnDef, GridState, Member } from './contract.t
+          s';
+       2 -import { applySortState, bindSortHeaders, nextSortDir } from '.
+         -/grid-controls.ts';                                            
+       2 +import {                                                       
+       3 +  applyPaginationState,                                        
+       4 +  applySortState,                                              
+       5 +  bindFilterForm,                                              
+       6 +  bindPagination,                                              
+       7 +  bindSortHeaders,                                             
+       8 +  nextSortDir,                                                 
+       9 +  readPageSize,                                                
+      10 +  renderStatus,                                                
+      11 +} from './grid-controls.ts';                                   
+      12  import { buildView } from './grid-model.ts';
+      13  import { renderRows } from './grid-render.ts';
+      14  import { members } from './sample-data.ts';
+      15  
+      16 +function queryRequired<E extends Element>(selector: string): E 
+         +{                                                              
+      17 +  const element = document.querySelector<E>(selector);         
+      18 +  if (element === null) {                                      
+      19 +    throw new Error(`Missing ${selector} in index.html.`);     
+      20 +  }                                                            
+      21 +  return element;                                              
+      22 +}                                                              
+      23 +                                                               
+      24  const columns: ColumnDef<Member>[] = [
+      25    { header: 'Name', accessorKey: 'name', sortable: true },
+      26    { header: 'Role', accessorKey: 'role', sortable: true },
+     ...
+      28    { header: 'Score', accessorKey: 'score', sortable: true },
+      29  ];
+      30  
+      14 -const tbody = document.querySelector<HTMLTableSectionElement>('
+         -#grid-body');                                                  
+      15 -if (tbody === null) {                                          
+      16 -  throw new Error('Missing #grid-body in index.html: the table 
+         -body is required to render rows.');                            
+      17 -}                                                              
+      31 +const section = queryRequired<HTMLElement>('section[data-page-s
+         +ize]');                                                        
+      32 +const form = queryRequired<HTMLFormElement>('#grid-controls'); 
+      33 +const tbody = queryRequired<HTMLTableSectionElement>('#grid-bod
+         +y');                                                           
+      34 +const thead = queryRequired<HTMLTableSectionElement>('thead'); 
+      35 +const nav = queryRequired<HTMLElement>('nav[aria-label="Paginat
+         +ion"]');                                                       
+      36 +const status = queryRequired<HTMLElement>('#grid-status');     
+      37  
+      19 -const thead = document.querySelector<HTMLTableSectionElement>('
+         -thead');                                                       
+      20 -if (thead === null) {                                          
+      21 -  throw new Error('Missing thead in index.html: the sort header
+         -s are required.');                                             
+      22 -}                                                              
+      23 -                                                               
+      24 -// Paging arrives with H1-T10. Until then, all rows share one p
+         -age.                                                           
+      38  const state: GridState = {
+      39    sortKey: null,
+      40    sortDir: 'none',
+      41    filterText: '',
+      42    page: 1,
+      30 -  pageSize: members.length,                                    
+      43 +  pageSize: readPageSize(section),                             
+      44    selectedIds: new Set<string>(),
+      45  };
+      46  
+     ...
+      57    state.page = view.page;
+      58    renderRows(tbody, view.pageRows, columns, state.selectedIds);
+      59    applySortState(thead, sortedIndex, state.sortDir);
+      60 +  applyPaginationState(nav, view.page, view.pageCount);        
+      61 +  renderStatus(status, {                                       
+      62 +    matchCount: view.matchCount,                               
+      63 +    total: members.length,                                     
+      64 +    page: view.page,                                           
+      65 +    pageCount: view.pageCount,                                 
+      66 +  });                                                          
+      67  };
+      68  
+      69  bindSortHeaders(thead, columns, (accessorKey) => {
+     ...
+      75    render();
+      76  });
+      77  
+      78 +bindFilterForm(form, (text) => {                               
+      79 +  state.filterText = text;                                     
+      80 +  state.page = 1;                                              
+      81 +  render();                                                    
+      82 +});                                                            
+      83 +                                                               
+      84 +bindPagination(nav, (step) => {                                
+      85 +  state.page += step;                                          
+      86 +  render();                                                    
+      87 +});                                                            
+      88 +                                                               
+      89  render();
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Build pass, 17/17 test pass, không có mẫu cấm, và các listener đều gắn ở
+  container. Commit hai file.
+
+  Committed 28ea182 (ctrl+o to expand)
+
+● H1-T10 xong. Đã commit 28ea182 (feat(ts): filter and pagination with live
+  status). Chưa push.
+
+  Thay đổi trong src/grid-controls.ts
+  - readPageSize: đọc data-page-size của section. Nếu không phải số nguyên dương
+    thì dùng 5, có comment ghi rõ điều này.
+  - bindFilterForm: một listener input và một listener submit trên
+    form#grid-controls. submit gọi preventDefault().
+  - bindPagination: một listener click trên nav, dùng closest('button') và id để
+    chọn #prev-page (-1) hoặc #next-page (+1).
+  - applyPaginationState: đặt disabled cho hai nút theo page và pageCount.
+  - renderStatus: đặt textContent của p#grid-status. Khi không có kết quả thì
+    hiện "No rows match the filter.", ngược lại hiện "Showing X of Y rows. Page
+    P of N.".
+
+  Thay đổi trong src/main.ts
+  - queryRequired<E>: hàm tra cứu phần tử, throw lỗi rõ ràng nếu thiếu.
+  - render() gọi buildView rồi cập nhật tbody, aria-sort, nút phân trang và
+    status.
+  - Lọc đặt page = 1 rồi render. Phân trang cộng hoặc trừ page, buildView đảm
+    bảo page nằm trong khoảng hợp lệ.
+  - Bỏ comment "Paging arrives with H1-T10" và giá trị members.length. pageSize
+    giờ đọc từ HTML.
+
+  Các lựa chọn của tôi, bạn có thể đổi
+  - Khi nút đang có focus bị disable (ví dụ bấm Next đến trang cuối), focus được
+    chuyển sang nút còn lại. Nếu không làm vậy, focus sẽ rơi xuống body. Đây là
+    một quyết định về accessibility ngoài prompt.
+  - Định dạng status giữ đúng khuôn mẫu trong prompt, nhưng ví dụ "Showing 3 of
+    12 rows. Page 1 of 3." không khớp với pageSize 5. Với 3 kết quả và 5 hàng
+    mỗi trang thì chỉ có 1 trang. Tôi dùng cách hiển thị "Showing <số khớp> of
+    <tổng> rows", tức là số hàng khớp trên tổng số hàng.
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0.
+  - npm test: 17/17 pass.
+  - Mẫu cấm trên src/*.ts: không có kết quả.
+  - Listener: chỉ có bốn listener, đều gắn ở container (thead, form với input và
+    submit, nav).
+
+  Chưa kiểm tra
+  - Các kiểm tra trên trình duyệt chưa được làm vì tôi không mở được trình duyệt
+    trong phiên này:
+    - Gõ "zz" hiện "No rows match the filter.".
+    - Xóa ô lọc trở về 12 hàng.
+    - Enter trong ô lọc không đổi URL và không tải lại trang.
+    - Bấm Next đến trang cuối thì Next bị disable.
+    - Vùng status cập nhật trong Accessibility tree.
+    - Console không có lỗi.
+  - Các mục trên cần bạn kiểm tra thủ công bằng npm run dev và
+    http://localhost:5173/.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md (mục H1-T11, keyboard
+  contract). Chỉ làm H1-T11: bàn phím.
+
+  Phạm vi file được sửa: src/keyboard.ts và src/main.ts.
+
+  Yêu cầu:
+  - Một listener keydown duy nhất trên tbody (event delegation). Dùng
+  event.key, không dùng keyCode hay keypress.
+  - Mũi tên: ArrowUp, ArrowDown, ArrowLeft, ArrowRight di chuyển ô đang focus.
+  Roving tabindex: ô đích đặt tabindex="0", ô cũ đặt tabindex="-1", rồi gọi
+  focus(). Các phím mũi tên được phép lặp khi giữ phím.
+  - Home và End: về ô đầu và cuối của hàng hiện tại. Ctrl+Home và Ctrl+End: về
+  ô đầu tiên của bảng và ô cuối cùng của bảng.
+  - Enter: chọn hàng đang focus, gọi onRowSelect nếu có. Bỏ qua khi
+  event.repeat là true.
+  - Space: bật tắt hàng đang focus trong GridState.selectedIds, rồi cập nhật
+  aria-selected của hàng đó. Bỏ qua khi event.repeat là true. preventDefault để
+  không cuộn trang.
+  - Vị trí focus (rowId và chỉ số cột) được lưu trong keyboard.ts. Sau mỗi lần
+  render (đổi trang, lọc, sắp xếp), main.ts gọi restoreRovingFocus(tbody,
+  position): đặt tabindex="0" lên ô đúng vị trí nếu hàng còn trên trang; nếu
+  không, đặt lên ô đầu tiên của trang. Khi grid không rỗng, luôn có đúng một ô
+  tabindex="0". Không đặt tabindex lên mọi ô.
+  - Listener keydown được gắn một lần trên tbody khi khởi tạo, không gắn lại
+  khi render.
+  - Dùng kiểu KeyboardEvent và kiểm tra target bằng instanceof
+  HTMLTableCellElement.
+
+  Kiểm tra: npm run build phải thành công. Tab vào bảng chỉ một lần cho một ô;
+  mũi tên di chuyển đúng; Ctrl+Home đưa tới ô đầu tiên; giữ Space không làm
+  hàng nhấp nháy; đổi trang rồi quay lại thì ô đang focus vẫn có tabindex="0"
+  và selection còn nguyên; Enter gọi onRowSelect (kiểm tra bằng console tạm
+  thời, không commit console.log).
+
+  Commit (TypeScript):
+  git add src/keyboard.ts src/main.ts
+  git commit -m "feat(ts): keyboard navigation with event delegation"
+
+  Không push. Báo cáo bằng tiếng Việt, nêu rõ những gì bạn chưa kiểm tra được.
+
+● Đọc stub keyboard.ts và main.ts hiện tại trước khi ghi đè.
+
+  Read 2 files (ctrl+o to expand)
+
+● Write(src\keyboard.ts)
+  ⎿  Added 123 lines, removed 2 lines
+        1 -export {};                                                    
+        2 -// stub: filled in H1-T11                                     
+        1 +export interface GridKeyboardHandlers {                       
+        2 +  onRowSelect(rowId: string): void;                           
+        3 +  onToggleRow(rowId: string): boolean;                        
+        4 +}                                                             
+        5 +                                                              
+        6 +export interface GridKeyboard {                               
+        7 +  restore(rowIds: readonly string[]): void;                   
+        8 +  dispose(): void;                                            
+        9 +}                                                             
+       10 +                                                              
+       11 +interface FocusPosition {                                     
+       12 +  rowId: string;                                              
+       13 +  column: number;                                             
+       14 +}                                                             
+       15 +                                                              
+       16 +// One keydown listener on tbody, attached once. The focus pos
+          +ition lives in this closure.                                  
+       17 +export function createGridKeyboard(tbody: HTMLTableSectionElem
+          +ent, handlers: GridKeyboardHandlers): GridKeyboard {          
+       18 +  let rowIds: readonly string[] = [];                         
+       19 +  let position: FocusPosition | null = null;                  
+       20 +                                                              
+       21 +  const cellAt = (row: number, column: number): HTMLTableCellE
+          +lement | undefined =>                                         
+       22 +    tbody.rows[row]?.cells[column];                           
+       23 +                                                              
+       24 +  const moveFocus = (from: HTMLTableCellElement, row: number, 
+          +column: number): void => {                                    
+       25 +    const target = cellAt(row, column);                       
+       26 +    if (target === undefined) {                               
+       27 +      return;                                                 
+       28 +    }                                                         
+       29 +    from.setAttribute('tabindex', '-1');                      
+       30 +    target.setAttribute('tabindex', '0');                     
+       31 +    target.focus();                                           
+       32 +    position = { rowId: rowIds[row], column };                
+       33 +  };                                                          
+       34 +                                                              
+       35 +  const onKeyDown = (event: KeyboardEvent): void => {         
+       36 +    if (!(event.target instanceof HTMLTableCellElement)) {    
+       37 +      return;                                                 
+       38 +    }                                                         
+       39 +    const cell = event.target;                                
+       40 +    const row = cell.parentElement;                           
+       41 +    if (!(row instanceof HTMLTableRowElement)) {              
+       42 +      return;                                                 
+       43 +    }                                                         
+       44 +    const rowIndex = row.sectionRowIndex;                     
+       45 +    const column = cell.cellIndex;                            
+       46 +    const lastRow = tbody.rows.length - 1;                    
+       47 +    const lastColumn = row.cells.length - 1;                  
+       48 +    const rowId = rowIds[rowIndex];                           
+       49 +                                                              
+       50 +    let targetRow = rowIndex;                                 
+       51 +    let targetColumn = column;                                
+       52 +    switch (event.key) {                                      
+       53 +      case 'ArrowUp':                                         
+       54 +        targetRow = Math.max(0, rowIndex - 1);                
+       55 +        break;                                                
+       56 +      case 'ArrowDown':                                       
+       57 +        targetRow = Math.min(lastRow, rowIndex + 1);          
+       58 +        break;                                                
+       59 +      case 'ArrowLeft':                                       
+       60 +        targetColumn = Math.max(0, column - 1);               
+       61 +        break;                                                
+       62 +      case 'ArrowRight':                                      
+       63 +        targetColumn = Math.min(lastColumn, column + 1);      
+       64 +        break;                                                
+       65 +      case 'Home':                                            
+       66 +        targetColumn = 0;                                     
+       67 +        if (event.ctrlKey) {                                  
+       68 +          targetRow = 0;                                      
+       69 +        }                                                     
+       70 +        break;                                                
+       71 +      case 'End':                                             
+       72 +        targetColumn = lastColumn;                            
+       73 +        if (event.ctrlKey) {                                  
+       74 +          targetRow = lastRow;                                
+       75 +        }                                                     
+       76 +        break;                                                
+       77 +      case 'Enter':                                           
+       78 +        if (!event.repeat) {                                  
+       79 +          handlers.onRowSelect(rowId);                        
+       80 +        }                                                     
+       81 +        return;                                               
+       82 +      case ' ':                                               
+       83 +        event.preventDefault();                               
+       84 +        if (!event.repeat) {                                  
+       85 +          row.setAttribute('aria-selected', String(handlers.on
+          +ToggleRow(rowId)));                                           
+       86 +        }                                                     
+       87 +        return;                                               
+       88 +      default:                                                
+       89 +        return;                                               
+       90 +    }                                                         
+       91 +    event.preventDefault();                                   
+       92 +    moveFocus(cell, targetRow, targetColumn);                 
+       93 +  };                                                          
+       94 +                                                              
+       95 +  // Called after every render: the row keeps its tabindex="0"
+          + cell when it is still on the page.                           
+       96 +  const restore = (nextRowIds: readonly string[]): void => {  
+       97 +    rowIds = nextRowIds;                                      
+       98 +    tbody.querySelectorAll<HTMLTableCellElement>('td').forEach
+          +((cell) => {                                                  
+       99 +      cell.setAttribute('tabindex', '-1');                    
+      100 +    });                                                       
+      101 +    if (tbody.rows.length === 0) {                            
+      102 +      return;                                                 
+      103 +    }                                                         
+      104 +                                                              
+      105 +    let row = 0;                                              
+      106 +    let column = 0;                                           
+      107 +    if (position !== null) {                                  
+      108 +      const found = rowIds.indexOf(position.rowId);           
+      109 +      if (found !== -1) {                                     
+      110 +        row = found;                                          
+      111 +        column = Math.min(position.column, tbody.rows[found].c
+          +ells.length - 1);                                             
+      112 +      }                                                       
+      113 +    }                                                         
+      114 +    position = { rowId: rowIds[row], column };                
+      115 +    cellAt(row, column)?.setAttribute('tabindex', '0');       
+      116 +  };                                                          
+      117 +                                                              
+      118 +  tbody.addEventListener('keydown', onKeyDown);               
+      119 +  return {                                                    
+      120 +    restore,                                                  
+      121 +    dispose: () => tbody.removeEventListener('keydown', onKeyD
+          +own),                                                         
+      122 +  };                                                          
+      123 +}                                                             
+
+● Ghi lại main.ts: tạo bộ điều khiển bàn phím một lần, và gọi restore sau mỗi
+  lần render.
+● Write(src\main.ts)
+  ⎿  Added 19 lines
+      11  } from './grid-controls.ts';
+      12  import { buildView } from './grid-model.ts';
+      13  import { renderRows } from './grid-render.ts';
+      14 +import { createGridKeyboard } from './keyboard.ts';            
+      15  import { members } from './sample-data.ts';
+      16  
+      17  function queryRequired<E extends Element>(selector: string): E 
+          {
+     ...
+      45    selectedIds: new Set<string>(),
+      46  };
+      47  
+      48 +const keyboard = createGridKeyboard(tbody, {                   
+      49 +  onRowSelect: (rowId) => {                                    
+      50 +    const member = members.find((item) => item.id === rowId);  
+      51 +    if (member !== undefined) {                                
+      52 +      status.textContent = `Selected ${member.name}.`;         
+      53 +    }                                                          
+      54 +  },                                                           
+      55 +  onToggleRow: (rowId) => {                                    
+      56 +    if (state.selectedIds.has(rowId)) {                        
+      57 +      state.selectedIds.delete(rowId);                         
+      58 +    } else {                                                   
+      59 +      state.selectedIds.add(rowId);                            
+      60 +    }                                                          
+      61 +    return state.selectedIds.has(rowId);                       
+      62 +  },                                                           
+      63 +});                                                            
+      64 +                                                               
+      65  const render = (): void => {
+      66    const sortedIndex = columns.findIndex((column) => column.acce
+          ssorKey === state.sortKey);
+      67    const sortKey = sortedIndex === -1 ? null : columns[sortedInd
+          ex].accessorKey;
+     ...
+      82      page: view.page,
+      83      pageCount: view.pageCount,
+      84    });
+      85 +  keyboard.restore(view.pageRows.map((row) => row.id));        
+      86  };
+      87  
+      88  bindSortHeaders(thead, columns, (accessorKey) => {
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Build pass, test pass, không có mẫu cấm, và chỉ có một listener keydown trên
+  tbody. Commit hai file.
+
+  Committed 3ba5d00 (ctrl+o to expand)
+
+● H1-T11 xong. Đã commit 3ba5d00 (feat(ts): keyboard navigation with event
+  delegation). Chưa push.
+
+  Thay đổi
+  - src/keyboard.ts: createGridKeyboard(tbody, handlers) gắn một listener
+    keydown trên tbody đúng một lần. Vị trí focus (rowId và column) lưu trong
+    closure. Trả về restore(rowIds) và dispose().
+    - Mũi tên: di chuyển một ô, kẹp ở mép, cho phép lặp khi giữ phím. Ô cũ về
+      tabindex="-1", ô đích "0", rồi focus().
+    - Home và End: đầu và cuối hàng. Ctrl+Home và Ctrl+End: đầu và cuối bảng.
+    - Enter: gọi onRowSelect, bỏ qua khi event.repeat.
+    - Space: gọi onToggleRow rồi cập nhật aria-selected của hàng. Luôn
+      preventDefault, chỉ đổi trạng thái khi không lặp.
+    - Target được kiểm tra bằng instanceof HTMLTableCellElement. Dùng event.key,
+      không dùng keyCode hay keypress.
+    - restore: đặt tabindex="-1" lên mọi ô rồi đặt "0" lên đúng một ô. Nếu hàng
+      còn trên trang thì giữ cột đó, không thì về ô đầu tiên của trang. Không
+      gọi focus(), nên không cướp focus khi lọc hay đổi trang.
+  - src/main.ts: tạo bộ điều khiển một lần trước render. Sau mỗi renderRows,
+    render() gọi keyboard.restore(view.pageRows.map((row) => row.id)).
+
+  Các lựa chọn của tôi, bạn có thể đổi
+  - Chữ ký khác WBS. WBS ghi restoreRovingFocus(tbody, position). Tôi dùng
+    createGridKeyboard và restore(rowIds), vì không thể nhận diện hàng theo
+    rowId nếu không có id trong DOM. renderRows không đặt id lên hàng. Muốn giữ
+    đúng chữ ký WBS thì phải thêm data-row-id trong grid-render.ts, nằm ngoài
+    phạm vi task này.
+  - Enter không chọn hàng. Nó chỉ gọi onRowSelect. Trong HW1 không có consumer
+    nào khác, nên main.ts đặt một onRowSelect ghi "Selected <tên>." vào
+    #grid-status. Cách này để bạn kiểm tra Enter mà không cần console.log. Lưu
+    ý: dòng này sẽ bị ghi đè khi render lại.
+  - Space bật tắt selectedIds trong main.ts, rồi keyboard cập nhật aria-selected
+    của hàng mà không render lại toàn bảng.
+
+  Kết quả kiểm tra (chạy trong phiên này)
+  - npm run build: thành công, exit code 0.
+  - npm test: 17/17 pass.
+  - Mẫu cấm (innerHTML, var, any, keyCode, keypress, console.) trên src/*.ts:
+    không có kết quả.
+  - Listener: có năm addEventListener, tất cả đều ở container: thead, form (hai
+    sự kiện), nav, tbody.
+
+  Chưa kiểm tra (không mở được trình duyệt trong phiên này)
+  - Tab vào bảng chỉ một lần: có khả năng không đạt. section có tabindex="0"
+    trong HTML (từ H1-T04), đứng trước bảng. Vì vậy Tab sẽ dừng ở section rồi
+    mới đến ô. Muốn một lần Tab thì cần bỏ tabindex của section, nhưng việc đó
+    nằm trong index.html, ngoài phạm vi task này. Tôi đề xuất sửa ở một task
+    riêng.
+  - Mũi tên, Ctrl+Home, Home và End.
+  - Giữ Space không làm hàng nhấp nháy.
+  - Đổi trang rồi quay lại: ô đang focus vẫn có tabindex="0" và selection còn
+    nguyên.
+  - Enter gọi onRowSelect.
+  - Console không có lỗi.
+
+  Bạn có thể kiểm tra bằng npm run dev, mở http://localhost:5173/, dùng bàn phím
+  trên bảng và xem thuộc tính trong DevTools.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
+
+> Đọc Agent.md, project-rules.md và TASK_DECOMPOSITION.md. Chỉ làm README.md
+  bằng tiếng Anh. Không sửa file khác. Thay toàn bộ README mẫu của Vite.
+
+  Nội dung:
+  - Title, mô tả ngắn: accessible data-grid with sorting, filtering and
+  pagination, written without UI or grid libraries.
+  - How to run: npm install, npm run dev (http://localhost:5173), npm run
+  build, npm run preview (http://localhost:4173), npm test.
+  - Features: sort, filter, pagination, keyboard map (table of keys and
+  actions, including Ctrl+Home and Ctrl+End).
+  - Accessibility: WCAG 2.2 AA choices (native table, roles, aria-sort, live
+  status, focus ring, 24px target size).
+  - Security: textContent only; the sample record that proves escaping.
+  - Dependencies: exactly vite and typescript (dev). Explain why no other
+  package.
+  - Verification: để trống mục Lighthouse score. Người dùng sẽ điền điểm tự
+  chạy. KHÔNG tự điền điểm.
+  - Known limits.
+
+  Commit:
+  git add README.md
+  git commit -m "docs(readme): document data-grid usage and checks"
+
+  Không push. Báo cáo bằng tiếng Việt.
+
+● Trước khi viết, tôi kiểm tra các sự thật mà README sẽ nêu: file README hiện có
+  chưa, các thuộc tính và selector thực tế trong mã, và dependency.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Repo chưa có README, nên tôi tạo mới. Nội dung chỉ nêu những gì đã có trong mã
+  và đã commit.
+
+● Write(README.md)
+  ⎿  Wrote 103 lines to README.md
+       1 # Team Directory Data Grid
+       2
+         written without any UI or grid library. It is built with Vite an
+         d vanilla TypeScript in strict mode, and targets WCAG 2.2 AA.
+       4
+       6
+       7 Requirements: Node.js. `npm test` uses a glob pattern, which nee
+         ds Node.js 21 or newer. The project was checked with Node.js 24.
+       9 ```sh
+      10 npm install
+     … +148 lines (ctrl+o to expand)
+
+● Trong README, mục Keyboard đang nói bảng "chỉ là một tab stop" nhưng mục Known
+  limits lại nói có hai tab stop. Hai chỗ này mâu thuẫn, nên tôi sửa lại. Tôi
+  cũng bỏ câu "trang không cuộn ngang" vì chưa kiểm tra trên trình duyệt.
+
+● Update(README.md)
+  ⎿  Added 1 line, removed 1 line
+      26  
+      27  ## Keyboard
+      28  
+      29 -The table is a single tab stop. Use the arrow keys to move betw
+         -een cells.                                                     
+      29 +Only one cell of the table is in the tab order at a time. Use t
+         +he arrow keys to move between cells.                           
+      30  
+      31  | Key | Action |
+      32  | --- | --- |
+
+● Update(README.md)
+  ⎿  Added 1 line, removed 1 line
+      61  | `--focus-ring` on `--bg` | 6.70 | 3 (UI) |
+      62  
+      63  - **Motion.** Animations and transitions are turned off when th
+          e user prefers reduced motion.
+      64 -- **Responsive.** The layout is designed for 375 px wide screen
+         -s. The page does not scroll sideways. A wide table scrolls insi
+         -de its own region.                                             
+      64 +- **Responsive.** The layout is designed for 375 px wide screen
+         +s. A wide table scrolls inside its own region, not the whole pa
+         +ge.                                                            
+      65  
+      66  ## Security
+      67  
+
+● README đã sửa xong. Đây là thay đổi tài liệu, nên không cần build. Tôi commit
+  đúng một file.
+
+  Committed cbe059a (ctrl+o to expand)
+
+● README đã commit cbe059a (docs(readme): document data-grid usage and checks).
+  Chưa push.
+
+  Thay đổi
+  - README.md (tạo mới, vì repo chưa có README). Nội dung bằng tiếng Anh, gồm:
+    - Mô tả và cách chạy: npm install, dev, build, preview, test.
+    - Tính năng: sắp xếp, lọc, phân trang, status, chọn hàng.
+    - Bảng phím, gồm Ctrl+Home và Ctrl+End.
+    - Accessibility: bảng gốc, roving tabindex, aria-sort, role="status", focus
+      ring 2px, vùng chạm 24px, bảng tỉ lệ tương phản đã tính ở H1-T05.
+    - Bảo mật: textContent, và bản ghi "Leo Truong" để kiểm tra escape.
+    - Dependency: chỉ vite và typescript, giải thích lý do.
+    - Verification: bảng Lighthouse để trống (Desktop và Mobile, Accessibility
+      và Best Practices). Tôi không điền điểm nào.
+    - Known limits.
+
+  Kiểm tra
+  - Không có kiểm tra mã nào trong task này, vì chỉ thay đổi tài liệu. Tôi đã
+    đối chiếu README với mã và package.json: scripts, dependency, id trong
+    index.html, và việc chưa có CSS cho is-sorted.
+  - git show --stat HEAD: chỉ có README.md.
+
+  Chỗ tôi đã chỉnh trong lúc viết
+  - Bản nháp có câu "bảng là một tab stop" nhưng mục Known limits ghi có hai tab
+    stop. Tôi sửa thành "chỉ một ô trong tab order tại một thời điểm" và để
+    giới hạn ở Known limits.
+  - Tôi bỏ câu "trang không cuộn ngang ở 375 px" vì chưa kiểm tra trên trình
+    duyệt. README chỉ ghi đây là thiết kế mục tiêu.
+
+  Known limits trong README
+  - Chỉ có theme sáng.
+  - Dữ liệu tĩnh 12 bản ghi.
+  - Cột đang sắp xếp chỉ có aria-sort, chưa có mũi tên hiển thị.
+  - Tab vào bảng hai lần, vì section có tabindex="0".
+  - Enter chỉ hiện tên trên status, và lựa chọn mất khi tải lại trang.
+  - Chưa có debounce cho ô lọc.
+
+  Việc bạn cần làm
+  - Điền điểm Lighthouse vào bảng trong README sau khi tự chạy.
+
+  CLAUDE.md vẫn untracked và không nằm trong commit này.
